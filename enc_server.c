@@ -142,7 +142,7 @@ int main(int argc, char *argv[]){
 	  //	while(counter <= msgSize) {
 	  	//	memset(tempBuffer, '\0', MAXSIZE);	  		
     		// Read the client's message from the socket
-    		while((charsRead = recv(connectionSocket, tempBuffer, sizeof(tempBuffer) - charsRead)) > 0) { 
+    		while((charsRead = recv(connectionSocket, tempBuffer, sizeof(tempBuffer) - charsRead, 0)) > 0) { 
     		////////////////////////////////////////////////////////////////////////////////////
     		//	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
     		//counter = counter + sizeof(tempBuffer);
