@@ -176,15 +176,15 @@ int main(int argc, char *argv[]){
 		
 		
 		
-		do {
-    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-    if (iResult > 0)
-        printf("Bytes received: %d\n", iResult);
-    else if (iResult == 0)
-        printf("Connection closed\n");
-    else
-        printf("recv failed: %d\n", WSAGetLastError());
-} while (iResult > 0);
+//		do {
+//    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+//    if (iResult > 0)
+//        printf("Bytes received: %d\n", iResult);
+//    else if (iResult == 0)
+//        printf("Connection closed\n");
+//    else
+//        printf("recv failed: %d\n", WSAGetLastError());
+//} while (iResult > 0);
 
 //	}
 		/////////////////////// recieve plaintext from client/////////////////////////////this is where i'm having a problem, the above code, is the code I was using that worked fine,
