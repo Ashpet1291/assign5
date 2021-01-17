@@ -156,13 +156,13 @@ int main(int argc, char *argv[]){
 //		// put buffer into plaintext to use later
 //		strcat(plaintext, tempBuffer);
 		
-		n = recvtimeout(connectionSocket, tempBuffer, sizeof(tempBuffer), 10); // 10 second timeout
+		charsRead = recvtimeout(connectionSocket, tempBuffer, sizeof(tempBuffer), 10); // 10 second timeout
 
-        if (n == -1) {
+        if (charsRead == -1) {
 		// error occurred
 		perror("recvtimeout");
 		}
-		else if (n == -2) {
+		else if (charsRead == -2) {
 		// timeout occurred
 		} else {
 		// got some data in buf
