@@ -166,10 +166,10 @@ int main(int argc, char *argv[]){
 	tempSize = msgSize;
 
 	int total = 0;
-	int bytesLeft = tempSize
+	int bytesLeft = tempSize;
 	int n;
 	while(total < tempSize) {
-		n = recv(connectionSocket, tempBuffer, bytesLeft, 0) 
+		n = recv(connectionSocket, tempBuffer, bytesLeft, 0); 
 		if (n == -1) { break; }
 		total += n;
 		bytesLeft -= n;
