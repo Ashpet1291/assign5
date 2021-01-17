@@ -155,6 +155,8 @@ int main(int argc, char *argv[]){
 //    	}   
 //		// put buffer into plaintext to use later
 //		strcat(plaintext, tempBuffer);
+
+	int counter = 0;
 	 while(counter <= msgSize) {
 		charsRead = recvtimeout(connectionSocket, tempBuffer, sizeof(tempBuffer), 10); // 10 second timeout
 
