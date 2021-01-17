@@ -188,7 +188,7 @@ int main(int argc, char *argv[]){
 //		}
 		int len;
 	   // Send message to server
-       len = strlen(msg);
+       len = msgSize;
 	   if (recvall(connectionSocket, tempBuffer, &len) == -1) {
 		
 	////////////////////////////////////////////////////////////////////////////////////
