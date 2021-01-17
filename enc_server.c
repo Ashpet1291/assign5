@@ -118,20 +118,51 @@ int main(int argc, char *argv[]){
 		}
 	
 	
- 		// Get the message from the client
-    	memset(tempBuffer, '\0', MAXSIZE);
-    	memset(plaintext, '\0', MAXSIZE);
-    	// Read the client's message from the socket
-    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-    	////////////////////////////////////////////////////////////////////////////////////
-    //	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
-    
-    	if (charsRead < 0){
-      		error("ERROR reading from socket");
-    	}   
-		// put buffer into plaintext to use later
-		strcat(plaintext, tempBuffer);
+// 		// Get the message from the client
+//    	memset(tempBuffer, '\0', MAXSIZE);
+//    	memset(plaintext, '\0', MAXSIZE);
+//    	// Read the client's message from the socket
+//    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+//    	////////////////////////////////////////////////////////////////////////////////////
+//    //	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
+//    
+//    	if (charsRead < 0){
+//      		error("ERROR reading from socket");
+//    	}   
+//		// put buffer into plaintext to use later
+//		strcat(plaintext, tempBuffer);
 		
+		
+		
+		
+		
+//		char buff[10000];
+		size_t len = sizeof(buffer);
+//		char *p = buff;
+		ssize_t n;
+		while ( len > 0 && (n=recv(connectionSocket, tempBuffer, len,0)) > 0 ) {
+ 			tempBuffer += n;
+  			len =- (size_t)n;
+		}
+		if ( len > 0 || n < 0 ) {
+		// oops, something went wrong
+			error("ERROR reading from socket");
+		}		
+//		char buff[10000];
+//		size_t len = sizeof(buff);
+//		char *p = buff;
+//		ssize_t n;
+//		while ( len > 0 && (n=recv(sock,p,len,0)) > 0 ) {
+// 			p += n;
+//  			len =- (size_t)n;
+//		}
+//		if ( len > 0 || n < 0 ) {
+//		// oops, something went wrong
+//		}
+
+
+
+
 		/////////////////////// recieve plaintext from client/////////////////////////////this is where i'm having a problem, the above code, is the code I was using that worked fine,
 		// but didn't receive the whole buffer, as it's too big
 //	  	memset(plaintext, '\0', MAXSIZE);
