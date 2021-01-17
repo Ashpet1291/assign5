@@ -169,7 +169,7 @@ int main(int argc, char *argv[]){
 		} else {
 		// got some data in buf
 		strcat(plaintext, tempBuffer);
-		counter += charsRead;
+	//	counter += charsRead;
 		}
 
 //	}
