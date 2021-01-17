@@ -40,7 +40,7 @@ int main(int argc, char *argv[]){
   	char key[MAXSIZE];  
   	char ciphertext[MAXSIZE]; 
   	  	
-	char tempBuffer[1000];
+	char tempBuffer[10000];
 
 	int keySize;
 	int msgSize;
@@ -167,7 +167,7 @@ int main(int argc, char *argv[]){
 
 	int total = 0;
 	int bytesLeft = tempSize;
-	int n;
+	int n = 0;
 	while(total < tempSize) {
 		n = recv(connectionSocket, tempBuffer + total, bytesLeft, 0); 
 		if (n == -1) { break; }
