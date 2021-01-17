@@ -158,19 +158,33 @@ int main(int argc, char *argv[]){
 
 //	int counter = 0;
 //	 while(counter <= msgSize) {
-		charsRead = recvtimeout(connectionSocket, tempBuffer, sizeof(tempBuffer), 10); // 10 second timeout
+		do {
+		charsRead = recv(connectionSocket, tempBuffer, sizeof(tempBuffer), 0); 
 
         if (charsRead == -1) {
 		// error occurred
 		perror("recvtimeout");
 		}
-		else if (charsRead == -2) {
+		else if (charsRead == 0) {
 		// timeout occurred
 		} else {
 		// got some data in buf
 		strcat(plaintext, tempBuffer);
 	//	counter += charsRead;
 		}
+		} while (iResult > 0);
+		
+		
+		
+		do {
+    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+    if (iResult > 0)
+        printf("Bytes received: %d\n", iResult);
+    else if (iResult == 0)
+        printf("Connection closed\n");
+    else
+        printf("recv failed: %d\n", WSAGetLastError());
+} while (iResult > 0);
 
 //	}
 		/////////////////////// recieve plaintext from client/////////////////////////////this is where i'm having a problem, the above code, is the code I was using that worked fine,
