@@ -155,7 +155,7 @@ int main(int argc, char *argv[]){
 //    	}   
 //		// put buffer into plaintext to use later
 //		strcat(plaintext, tempBuffer);
-		
+	 while(counter <= msgSize) {
 		charsRead = recvtimeout(connectionSocket, tempBuffer, sizeof(tempBuffer), 10); // 10 second timeout
 
         if (charsRead == -1) {
@@ -167,9 +167,10 @@ int main(int argc, char *argv[]){
 		} else {
 		// got some data in buf
 		strcat(plaintext, tempBuffer);
+		counter += charsRead;
 		}
 
-		
+	}
 		/////////////////////// recieve plaintext from client/////////////////////////////this is where i'm having a problem, the above code, is the code I was using that worked fine,
 		// but didn't receive the whole buffer, as it's too big
 	  	
