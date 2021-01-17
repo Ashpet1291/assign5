@@ -27,6 +27,30 @@ void error(const char *msg) {
 } 
 
 
+
+int recvtimeout(int s, char *buf, int len, int timeout)
+{
+  fd_set fds;
+  int n;
+  struct timeval tv;
+
+  // set up the file descriptor set
+  FD_ZERO(&fds);
+  FD_SET(s, &fds);
+  // set up the struct timeval for the timeout
+  tv.tv_sec = timeout;
+  tv.tv_usec = 0;
+
+  // wait until timeout or data received
+  n = select(s+1, &fds, NULL, NULL, &tv);
+  if (n == 0) return -2; // timeout!
+  if (n == -1) return -1; // error
+
+  // data must be here, so do a normal recv()
+  return recv(s, buf, len, 0);
+ }
+
+
 int main(int argc, char *argv[]){
 	int connectionSocket, newConnectionSocket, charsRead, portNumber;
 	char buffer[MAXSIZE];
@@ -132,14 +156,19 @@ int main(int argc, char *argv[]){
 //		// put buffer into plaintext to use later
 //		strcat(plaintext, tempBuffer);
 		
+		n = recvtimeout(connectionSocket, tempBuffer, sizeof(tempBuffer), 10); // 10 second timeout
 
-
-
-		int nDataLength;
-		while ((nDataLength = recv(connectionSocket, tempBuffer, sizeof(tempBuffer), 0)) > 0) {
-    		strcat(plaintext, tempBuffer);
+        if (n == -1) {
+		// error occurred
+		perror("recvtimeout");
 		}
-		
+		else if (n == -2) {
+		// timeout occurred
+		} else {
+		// got some data in buf
+		strcat(plaintext, tempBuffer);
+		}
+
 		
 		/////////////////////// recieve plaintext from client/////////////////////////////this is where i'm having a problem, the above code, is the code I was using that worked fine,
 		// but didn't receive the whole buffer, as it's too big
@@ -157,9 +186,9 @@ int main(int argc, char *argv[]){
 //    		//counter = counter + sizeof(tempBuffer);
 //    	//	total +=charsRead;
 //    		
-    		if (charsRead < 0){
-      			error("ERROR reading from socket");
-    		}   
+//    		if (charsRead < 0){
+//      			error("ERROR reading from socket");
+//    		}   
 //			// put buffer into plaintext to use later
 //			strcat(plaintext, tempBuffer);	
 //			
