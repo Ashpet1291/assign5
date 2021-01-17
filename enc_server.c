@@ -134,94 +134,32 @@ int main(int argc, char *argv[]){
 		
 		
 		
-		
-//		
-////		char buff[10000];
-//		size_t len = sizeof(buffer);
-////		char *p = buff;
-//		ssize_t n;
-//		while ( len > 0 && (n=recv(connectionSocket, tempBuffer, len,0)) > 0 ) {
-// 			tempBuffer += n;
-//  			len =- (size_t)n;
-//		}
-//		if ( len > 0 || n < 0 ) {
-//		// oops, something went wrong
-//			error("ERROR reading from socket");
-//		}		
-//		char buff[10000];
-//		size_t len = sizeof(buff);
-//		char *p = buff;
-//		ssize_t n;
-//		while ( len > 0 && (n=recv(sock,p,len,0)) > 0 ) {
-// 			p += n;
-//  			len =- (size_t)n;
-//		}
-//		if ( len > 0 || n < 0 ) {
-//		// oops, something went wrong
-//		}
-
-//int receiveALL (int s, char *buff, int *len) {
-	int tempSize = 0;
-	
-	tempSize = msgSize;
-
-	int total = 0;
-	int bytesLeft = tempSize;
-	int n = 0;
-	while(total < tempSize) {
-		n = recv(connectionSocket, tempBuffer, bytesLeft - n, 0); 
-		if (n == -1) { break; }
-		total += n;
-		bytesLeft -= n;
-		strcat(plaintext, tempBuffer);
-	}
-	tempSize = total;
-
-
 		/////////////////////// recieve plaintext from client/////////////////////////////this is where i'm having a problem, the above code, is the code I was using that worked fine,
 		// but didn't receive the whole buffer, as it's too big
-//	  	memset(plaintext, '\0', MAXSIZE);
-//	  	
-//	  	int counter = 0;
-//	  	int total = 0;
-//	  	
-//	  //	while(counter <= msgSize) {
-//	  	//	memset(tempBuffer, '\0', MAXSIZE);	  		
-//    		// Read the client's message from the socket
-//    		while((charsRead = recv(connectionSocket, tempBuffer, sizeof(tempBuffer) - charsRead, 0)) > 0) { 
-//    		////////////////////////////////////////////////////////////////////////////////////
-//    		//	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
-//    		//counter = counter + sizeof(tempBuffer);
-//    		total +=charsRead;
-//    		
-//    		if (charsRead < 0){
-//      			error("ERROR reading from socket");
-//    		}   
-//			// put buffer into plaintext to use later
-//			strcat(plaintext, tempBuffer);	
-//			
-//			counter = counter + charsRead;
-//		
-//		}
-
-
-//
-//int count = 0;
-//int total = 0;
-//
-//while ((count = recv(socket, &buffer[total], sizeof buffer - count, 0)) > 0)
-//{
-//    total += count;
-//    // At this point the buffer is valid from 0..total-1, if that's enough then process it and break, otherwise continue
-//}
-//if (count == -1)
-//{
-//    perror("recv");
-//}
-//else if (count == 0)
-//{
-//    // EOS on the socket: close it, exit the thread, etc.
-//}
+	  	
+	  	int counter = 0;
+	  	int total = 0;
+	  	
+	  	while(counter <= msgSize) {
+	  		memset(tempBuffer, '\0', MAXSIZE);	  		
+    		// Read the client's message from the socket
+    		while((charsRead = recv(connectionSocket, tempBuffer, sizeof(tempBuffer) - charsRead, 0)) > 0) { 
+    		////////////////////////////////////////////////////////////////////////////////////
+    		//	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
+    		//counter = counter + sizeof(tempBuffer);
+    		total +=charsRead;
+    		
+    		if (charsRead < 0){
+      			error("ERROR reading from socket");
+    		}   
+			// put buffer into plaintext to use later
+			strcat(plaintext, tempBuffer);	
+			
+			counter = counter + charsRead;
+		
+		
+			}
+		}
 
 
 		// sends success message 2 to client- msg received
