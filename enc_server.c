@@ -172,7 +172,7 @@ int main(int argc, char *argv[]){
 		strcat(plaintext, tempBuffer);
 	//	counter += charsRead;
 		}
-		} while (iResult > 0);
+		} while (charsRead > 0);
 		
 		
 		
