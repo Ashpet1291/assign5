@@ -49,6 +49,24 @@ int recvtimeout(int s, char *buf, int len, int timeout)
   // data must be here, so do a normal recv()
   return recv(s, buf, len, 0);
  }
+ 
+ int recvall(int s, char *buf, int *len)
+{
+    int total = 0;        // how many bytes we've sent
+    int bytesleft = *len; // how many we have left to send
+    int n;
+
+    while(total < *len) {
+        n = recv(s, buf+total, bytesleft, 0);
+        if (n == -1) { break; }
+        total += n;
+        bytesleft -= n;
+    }
+
+    *len = total; // return number actually sent here
+
+    return n==-1?-1:0; // return -1 on failure, 0 on success
+} 
 
 
 int main(int argc, char *argv[]){
@@ -155,38 +173,32 @@ int main(int argc, char *argv[]){
 //    	}   
 //		// put buffer into plaintext to use later
 //		strcat(plaintext, tempBuffer);
-
-//	int counter = 0;
-//	 while(counter <= msgSize) {
-		do {
-		charsRead = recv(connectionSocket, tempBuffer, sizeof(tempBuffer), 0); 
-
-        if (charsRead == -1) {
-		// error occurred
-		perror("recvtimeout");
-		}
-		else if (charsRead == 0) {
-		// timeout occurred
-		} else {
-		// got some data in buf
-		strcat(plaintext, tempBuffer);
-	//	counter += charsRead;
-		}
-		} while (charsRead > 0);
+//		
+//		n = recvtimeout(s, buf, sizeof buf, 10); // 10 second timeout
+//
+//        if (n == -1) {
+//		// error occurred
+//		perror("recvtimeout");
+//		}
+//		else if (n == -2) {
+//		// timeout occurred
+//		} else {
+//		// got some data in buf
+//			strcat(plaintext, tempBuffer);
+//		}
+		int len;
+	   // Send message to server
+       len = strlen(msg);
+	   if (recvall(connectionSocket, tempBuffer, &len) == -1) {
 		
+	////////////////////////////////////////////////////////////////////////////////////
+   // printf("Client: This is size of msg being sent in sendall %d\n", len);
 		
-		
-//		do {
-//    iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
-//    if (iResult > 0)
-//        printf("Bytes received: %d\n", iResult);
-//    else if (iResult == 0)
-//        printf("Connection closed\n");
-//    else
-//        printf("recv failed: %d\n", WSAGetLastError());
-//} while (iResult > 0);
+    perror("sendall");
+    printf("We only sent %d bytes because of the error!\n", len);
+	} 
 
-//	}
+
 		/////////////////////// recieve plaintext from client/////////////////////////////this is where i'm having a problem, the above code, is the code I was using that worked fine,
 		// but didn't receive the whole buffer, as it's too big
 	  	
