@@ -119,8 +119,8 @@ int main(int argc, char *argv[]){
 	
 	
 // 		// Get the message from the client
-//    	memset(tempBuffer, '\0', MAXSIZE);
-//    	memset(plaintext, '\0', MAXSIZE);
+    	memset(tempBuffer, '\0', MAXSIZE);
+    	memset(plaintext, '\0', MAXSIZE);
 //    	// Read the client's message from the socket
 //    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
 //    	////////////////////////////////////////////////////////////////////////////////////
@@ -135,19 +135,19 @@ int main(int argc, char *argv[]){
 		
 		
 		
-		
-//		char buff[10000];
-		size_t len = sizeof(buffer);
-//		char *p = buff;
-		ssize_t n;
-		while ( len > 0 && (n=recv(connectionSocket, tempBuffer, len,0)) > 0 ) {
- 			tempBuffer += n;
-  			len =- (size_t)n;
-		}
-		if ( len > 0 || n < 0 ) {
-		// oops, something went wrong
-			error("ERROR reading from socket");
-		}		
+//		
+////		char buff[10000];
+//		size_t len = sizeof(buffer);
+////		char *p = buff;
+//		ssize_t n;
+//		while ( len > 0 && (n=recv(connectionSocket, tempBuffer, len,0)) > 0 ) {
+// 			tempBuffer += n;
+//  			len =- (size_t)n;
+//		}
+//		if ( len > 0 || n < 0 ) {
+//		// oops, something went wrong
+//			error("ERROR reading from socket");
+//		}		
 //		char buff[10000];
 //		size_t len = sizeof(buff);
 //		char *p = buff;
@@ -159,6 +159,41 @@ int main(int argc, char *argv[]){
 //		if ( len > 0 || n < 0 ) {
 //		// oops, something went wrong
 //		}
+
+//int receiveALL (int s, char *buff, int *len) {
+	int tempSize = 0;
+	
+	tempSize = msgSize;
+
+	int total = 0;
+	int bytesLeft = tempSize
+	int n;
+	while(total < tempSize) {
+		n = recv(connectionSocket, tempBuffer, bytesLeft, 0) 
+		if (n == -1) { break; }
+		total += n;
+		bytesLeft -= n;
+		strcat(plaintext, tempBuffer);
+	}
+	tempSize = total;
+
+//int sendall(int s, char *buf, int *len)
+//{
+//    int total = 0;        // how many bytes we've sent
+//    int bytesleft = *len; // how many we have left to send
+//    int n;
+//
+//    while(total < *len) {
+//        n = send(s, buf+total, bytesleft, 0);
+//        if (n == -1) { break; }
+//        total += n;
+//        bytesleft -= n;
+//    }
+//
+//    *len = total; // return number actually sent here
+//
+//    return n==-1?-1:0; // return -1 on failure, 0 on success
+//}
 
 
 
