@@ -169,7 +169,7 @@ int main(int argc, char *argv[]){
 	int bytesLeft = tempSize;
 	int n;
 	while(total < tempSize) {
-		n = recv(connectionSocket, tempBuffer, bytesLeft, 0); 
+		n = recv(connectionSocket, tempBuffer + total, bytesLeft, 0); 
 		if (n == -1) { break; }
 		total += n;
 		bytesLeft -= n;
