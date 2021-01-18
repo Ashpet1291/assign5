@@ -108,7 +108,7 @@ void checkChars(char tempList[]) {
 			// fine because it's uppercase
 		}
 		else {
-			fprintf(stderr,"error: input contains bad characters");
+			fprintf(stderr,"error: input contains bad characters\n");
 			break;
 			exit(1);
 		}
