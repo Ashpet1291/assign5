@@ -211,32 +211,6 @@ int main(int argc, char *argv[]){
 //	} 
 
 
-		/////////////////////// recieve plaintext from client/////////////////////////////this is where i'm having a problem, the above code, is the code I was using that worked fine,
-		// but didn't receive the whole buffer, as it's too big
-	  	
-//	  	int counter = 0;
-//	  	int total = 0;
-//	  	
-//	  	while(counter <= msgSize) {
-//	  		memset(tempBuffer, '\0', MAXSIZE);	  		
-//    		// Read the client's message from the socket
-// //   		while((charsRead = recv(connectionSocket, tempBuffer, sizeof(tempBuffer) - charsRead, 0)) > 0) {
-//			charsRead = recv(connectionSocket, tempBuffer, sizeof(tempBuffer) - charsRead, 0); 
-//    		////////////////////////////////////////////////////////////////////////////////////
-//    		//	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
-//    		//counter = counter + sizeof(tempBuffer);
-//    	//	total +=charsRead;
-//    		
-//    		if (charsRead < 0){
-//      			error("ERROR reading from socket");
-//    		}   
-//			// put buffer into plaintext to use later
-//			strcat(plaintext, tempBuffer);	
-//			
-//			counter = counter + charsRead;
-//	
-////			}
-//		}
 
 
 		// sends success message 2 to client- msg received
