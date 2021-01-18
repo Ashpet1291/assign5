@@ -93,26 +93,28 @@ long int getFileSize(char fileName[]) {
 // checks for bad chars
 void checkChars(char tempList[]) {
 	
-	int i;
-	
-	int charac = 0;
+	int i;	
+	char charac;
 	
 	for(i=0; i<strlen(tempList)-2; i++) {
 		
-		charac = tempList[i];
-		
+		charac = tempList[i];		
 	//	printf("this is charac %d\n", charac);
 	//	printf("this is char char %s\n", tempList[i]);
-			
-		if(charac != 32) {
-			if (charac < 65) {
-					fprintf(stderr,"error: input contains bad characters");
-					exit(1); 
-				}
-			if (charac > 90) {
-				fprintf(stderr,"error: input contains bad characters");
-				exit(1); 
-				}	
+		if (charac == ' ') {
+		// fine because it's a space	
+		}	
+		else if((charac > 'A') && (charac < 'Z')) {
+			// fine because it's uppercase
+		}
+		else {
+			fprintf(stderr,"error: input contains bad characters");
+			exit(1);
+		}
+//			if (charac > 90) {
+//				fprintf(stderr,"error: input contains bad characters");
+//				exit(1); 
+//				}	
 		}
 	}
 }
@@ -187,9 +189,9 @@ int main(int argc, char *argv[]) {
     
    
     // check plaintextFile file for bad characters
-//    checkChars(argv[1]);
-//	// check key file for bad characters
-//    checkChars(argv[2]);
+    checkChars(argv[1]);
+	// check key file for bad characters
+    checkChars(argv[2]);
 	
 		// Send message size to server
  	// Write to the server

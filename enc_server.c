@@ -163,17 +163,21 @@ int main(int argc, char *argv[]){
 // 		// Get the message from the client
     	memset(tempBuffer, '\0', MAXSIZE);
     	memset(plaintext, '\0', MAXSIZE);
-//    	// Read the client's message from the socket
-//    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-//    	////////////////////////////////////////////////////////////////////////////////////
-//    //	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
-//    
-//    	if (charsRead < 0){
-//      		error("ERROR reading from socket");
-//    	}   
-//		// put buffer into plaintext to use later
-//		strcat(plaintext, tempBuffer);
+    	// Read the client's message from the socket
+    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+    	////////////////////////////////////////////////////////////////////////////////////
+    //	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
+    
+    	if (charsRead < 0){
+      		error("ERROR reading from socket");
+    	}   
+		// put buffer into plaintext to use later
+		strcat(plaintext, tempBuffer);
 //		
+
+
+
+
 //		n = recvtimeout(s, buf, sizeof buf, 10); // 10 second timeout
 //
 //        if (n == -1) {
@@ -186,17 +190,25 @@ int main(int argc, char *argv[]){
 //		// got some data in buf
 //			strcat(plaintext, tempBuffer);
 //		}
-		int len;
-	   // Send message to server
-       len = msgSize;
-	   if (recvall(connectionSocket, tempBuffer, &len) == -1) {
-		
-	////////////////////////////////////////////////////////////////////////////////////
-   // printf("Client: This is size of msg being sent in sendall %d\n", len);
-		
-    perror("sendall");
-    printf("We only sent %d bytes because of the error!\n", len);
-	} 
+
+
+
+
+
+
+
+
+//		int len;
+//	   // Send message to server
+//       len = msgSize;
+//	   if (recvall(connectionSocket, tempBuffer, &len) == -1) {
+//		
+//	////////////////////////////////////////////////////////////////////////////////////
+//   // printf("Client: This is size of msg being sent in sendall %d\n", len);
+//		
+//    perror("sendall");
+//    printf("We only sent %d bytes because of the error!\n", len);
+//	} 
 
 
 		/////////////////////// recieve plaintext from client/////////////////////////////this is where i'm having a problem, the above code, is the code I was using that worked fine,
