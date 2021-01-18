@@ -96,7 +96,7 @@ void checkChars(char tempList[]) {
 	int i;	
 	char charac;
 	
-	for(i=0; i<strlen(tempList)-3; i++) {
+	for(i=0; i<strlen(tempList)-2; i++) {
 		
 		charac = tempList[i];		
 	//	printf("this is charac %d\n", charac);
@@ -104,7 +104,7 @@ void checkChars(char tempList[]) {
 		if (charac == ' ') {
 		// fine because it's a space	
 		}	
-		else if((charac > 'A') && (charac < 'Z')) {
+		else if((charac >= 'A') && (charac <= 'Z')) {
 			// fine because it's uppercase
 		}
 		else {
