@@ -188,8 +188,8 @@ int main(int argc, char *argv[]) {
 	}
     
    
-    // check plaintextFile file for bad characters
-    checkChars(argv[1]);
+//    // check plaintextFile file for bad characters
+//    checkChars();
 	// check key file for bad characters
    // checkChars(argv[2]);
 	
@@ -235,7 +235,10 @@ int main(int argc, char *argv[]) {
     msg[strcspn(msg, "\n")] = '\0'; 
 
     fclose(plaintextFile); 
-    
+
+
+	// check plaintextFile file for bad characters
+    checkChars(msg);    
 
     int len;
 	// Send message to server
