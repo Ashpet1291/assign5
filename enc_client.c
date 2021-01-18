@@ -109,6 +109,7 @@ void checkChars(char tempList[]) {
 		}
 		else {
 			fprintf(stderr,"error: input contains bad characters");
+			break;
 			exit(1);
 		}
 //			if (charac > 90) {
