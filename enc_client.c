@@ -96,7 +96,7 @@ void checkChars(char tempList[]) {
 	int i;	
 	char charac;
 	
-	for(i=0; i<strlen(tempList)-2; i++) {
+	for(i=0; i<strlen(tempList)-3; i++) {
 		
 		charac = tempList[i];		
 	//	printf("this is charac %d\n", charac);
