@@ -191,7 +191,7 @@ int main(int argc, char *argv[]) {
     // check plaintextFile file for bad characters
     checkChars(argv[1]);
 	// check key file for bad characters
-    checkChars(argv[2]);
+   // checkChars(argv[2]);
 	
 		// Send message size to server
  	// Write to the server
