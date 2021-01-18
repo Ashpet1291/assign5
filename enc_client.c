@@ -117,7 +117,6 @@ void checkChars(char tempList[]) {
 //				}	
 		}
 	}
-}
 
 
 int main(int argc, char *argv[]) {
