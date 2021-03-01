@@ -33,6 +33,7 @@ void error(const char *msg) {
 
 int recv_timeout(int s , int timeout)
 {
+	char plaintext[MAXSIZE]; 
 	int size_recv , total_size= 0;
 	struct timeval begin , now;
 	char chunk[CHUNK_SIZE];
@@ -78,7 +79,7 @@ int recv_timeout(int s , int timeout)
 			gettimeofday(&begin , NULL);
 		}
 		
-		strcat(plaintext, tempBuffer);
+		strcat(plaintext, chunk);
 	}
 	
 	return total_size;
