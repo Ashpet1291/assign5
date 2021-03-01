@@ -17,7 +17,7 @@
 #include <sys/wait.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#inclue <fcntl.h>
+#include <fcntl.h>
 
 #define MAXSIZE 1000
 #define CHUNK_SIZE 500
