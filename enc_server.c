@@ -72,7 +72,7 @@ int recv_timeout(int s , int timeout)
 		else
 		{
 			total_size += size_recv;
-			printf("%s" , chunk);
+		//	printf("%s" , chunk);
 			//reset beginning time
 			gettimeofday(&begin , NULL);
 		}
