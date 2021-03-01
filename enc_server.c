@@ -19,6 +19,9 @@
 #include <netinet/in.h>
 
 #define MAXSIZE 1000
+#define CHUNK_SIZE 500
+
+
 
 // Error function used for reporting issues
 void error(const char *msg) {
@@ -26,8 +29,56 @@ void error(const char *msg) {
   exit(1);
 } 
 
-//Receiving function
-int recv_timeout(int s, int timeout);
+
+int recv_timeout(int s , int timeout)
+{
+	int size_recv , total_size= 0;
+	struct timeval begin , now;
+	char chunk[CHUNK_SIZE];
+	double timediff;
+	
+	//make socket non blocking
+	fcntl(s, F_SETFL, O_NONBLOCK);
+	
+	//beginning time
+	gettimeofday(&begin , NULL);
+	
+	while(1)
+	{
+		gettimeofday(&now , NULL);
+		
+		//time elapsed in seconds
+		timediff = (now.tv_sec - begin.tv_sec) + 1e-6 * (now.tv_usec - begin.tv_usec);
+		
+		//if you got some data, then break after timeout
+		if( total_size > 0 && timediff > timeout )
+		{
+			break;
+		}
+		
+		//if you got no data at all, wait a little longer, twice the timeout
+		else if( timediff > timeout*2)
+		{
+			break;
+		}
+		
+		memset(chunk ,0 , CHUNK_SIZE);	//clear the variable
+		if((size_recv =  recv(s , chunk , CHUNK_SIZE , 0) ) < 0)
+		{
+			//if nothing was received then we want to wait a little before trying again, 0.1 seconds
+			usleep(100000);
+		}
+		else
+		{
+			total_size += size_recv;
+			printf("%s" , chunk);
+			//reset beginning time
+			gettimeofday(&begin , NULL);
+		}
+	}
+	
+	return total_size;
+}
 //int recvtimeout(int s, char *buf, int len, int timeout)
 //{
 //  fd_set fds;
@@ -164,7 +215,9 @@ int main(int argc, char *argv[]){
     	memset(tempBuffer, '\0', MAXSIZE);
     	memset(plaintext, '\0', MAXSIZE);
     	// Read the client's message from the socket
-    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+    		//Now receive full data
+		charsRead = recv_timeout(connectionSocket, 4);
+    	//charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
     	////////////////////////////////////////////////////////////////////////////////////
     //	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
     
