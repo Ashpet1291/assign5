@@ -63,7 +63,8 @@ int recv_timeout(int s , int timeout)
 			break;
 		}
 		
-		memset(chunk ,0 , CHUNK_SIZE);	//clear the variable
+		memset(chunk , 0, CHUNK_SIZE);	//clear the variable
+		memset(plaintext, '\0', CHUNK_SIZE);
 		if((size_recv =  recv(s , chunk , CHUNK_SIZE , 0) ) < 0)
 		{
 			//if nothing was received then we want to wait a little before trying again, 0.1 seconds
@@ -76,6 +77,8 @@ int recv_timeout(int s , int timeout)
 			//reset beginning time
 			gettimeofday(&begin , NULL);
 		}
+		
+		strcat(plaintext, tempBuffer);
 	}
 	
 	return total_size;
@@ -226,7 +229,7 @@ int main(int argc, char *argv[]){
       		error("ERROR reading from socket");
     	}   
 		// put buffer into plaintext to use later
-		strcat(plaintext, tempBuffer);
+//		strcat(plaintext, tempBuffer);
 //		
 
 
