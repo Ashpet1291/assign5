@@ -26,47 +26,47 @@ void error(const char *msg) {
   exit(1);
 } 
 
-
-
-int recvtimeout(int s, char *buf, int len, int timeout)
-{
-  fd_set fds;
-  int n;
-  struct timeval tv;
-
-  // set up the file descriptor set
-  FD_ZERO(&fds);
-  FD_SET(s, &fds);
-  // set up the struct timeval for the timeout
-  tv.tv_sec = timeout;
-  tv.tv_usec = 0;
-
-  // wait until timeout or data received
-  n = select(s+1, &fds, NULL, NULL, &tv);
-  if (n == 0) return -2; // timeout!
-  if (n == -1) return -1; // error
-
-  // data must be here, so do a normal recv()
-  return recv(s, buf, len, 0);
- }
+//Receiving function
+int recv_timeout(int s, int timeout);
+//int recvtimeout(int s, char *buf, int len, int timeout)
+//{
+//  fd_set fds;
+//  int n;
+//  struct timeval tv;
+//
+//  // set up the file descriptor set
+//  FD_ZERO(&fds);
+//  FD_SET(s, &fds);
+//  // set up the struct timeval for the timeout
+//  tv.tv_sec = timeout;
+//  tv.tv_usec = 0;
+//
+//  // wait until timeout or data received
+//  n = select(s+1, &fds, NULL, NULL, &tv);
+//  if (n == 0) return -2; // timeout!
+//  if (n == -1) return -1; // error
+//
+//  // data must be here, so do a normal recv()
+//  return recv(s, buf, len, 0);
+// }
  
- int recvall(int s, char *buf, int *len)
-{
-    int total = 0;        // how many bytes we've sent
-    int bytesleft = *len; // how many we have left to send
-    int n;
-
-    while(total < *len) {
-        n = recv(s, buf+total, bytesleft, 0);
-        if (n == -1) { break; }
-        total += n;
-        bytesleft -= n;
-    }
-
-    *len = total; // return number actually sent here
-
-    return n==-1?-1:0; // return -1 on failure, 0 on success
-} 
+// int recvall(int s, char *buf, int *len)
+//{
+//    int total = 0;        // how many bytes we've sent
+//    int bytesleft = *len; // how many we have left to send
+//    int n;
+//
+//    while(total < *len) {
+//        n = recv(s, buf+total, bytesleft, 0);
+//        if (n == -1) { break; }
+//        total += n;
+//        bytesleft -= n;
+//    }
+//
+//    *len = total; // return number actually sent here
+//
+//    return n==-1?-1:0; // return -1 on failure, 0 on success
+//} 
 
 
 int main(int argc, char *argv[]){
@@ -190,10 +190,6 @@ int main(int argc, char *argv[]){
 //		// got some data in buf
 //			strcat(plaintext, tempBuffer);
 //		}
-
-
-
-
 
 
 
