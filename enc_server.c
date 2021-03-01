@@ -20,7 +20,7 @@
 #include <fcntl.h>
 
 #define MAXSIZE 1000
-#define CHUNK_SIZE 500
+#define CHUNK_SIZE 1024
 
 
 
@@ -39,7 +39,7 @@ int recv_timeout(int s , int timeout)
 	double timediff;
 	
 	//make socket non blocking
-	fcntl(s, F_SETFL);
+	fcntl(s, F_SETFL, O_NONBLOCK);
 	
 	//beginning time
 	gettimeofday(&begin , NULL);
