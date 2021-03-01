@@ -39,7 +39,7 @@ int recv_timeout(int s , int timeout)
 	double timediff;
 	
 	//make socket non blocking
-	fcntl(s, F_SETFL, O_NONBLOCK);
+	fcntl(s, F_SETFL);
 	
 	//beginning time
 	gettimeofday(&begin , NULL);
