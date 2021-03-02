@@ -88,30 +88,6 @@ int recv_timeout(int s , int timeout)
 }
 
  
- int recvall(int s, char *buf, int *len)
-{
-	memset(plaintext, '\0', CHUNK_SIZE);
-    int total = 0;        // how many bytes we've sent
-    int bytesleft = *len; // how many we have left to send
-    int n;
-    int chunksize = 500;
-
-    while(total < *len) {
-    	
-    	memset(buf, '\0', MAXSIZE);
-        n = recv(s, buf, chunksize, 0);
-        if (n == -1) { break; }
-        strcat(plaintext, buf);
-        total += n;
-        bytesleft -= n;
-    }
-
-    *len = total; // return number actually sent here
-
-    return n==-1?-1:0; // return -1 on failure, 0 on success
-} 
-
-
 int main(int argc, char *argv[]){
 	int connectionSocket, newConnectionSocket, charsRead, portNumber;
 	char buffer[MAXSIZE];
@@ -203,36 +179,22 @@ int main(int argc, char *argv[]){
 	
  		// Get the message from the client
  		
-//   	memset(tempBuffer, '\0', MAXSIZE);
-//    	memset(plaintext, '\0', MAXSIZE);
+   		memset(tempBuffer, '\0', MAXSIZE);
+    	memset(plaintext, '\0', MAXSIZE);
 
     	//Now receive full data
 //	  	charsRead = recv_timeout(connectionSocket, 4);
 
 
-//    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-    	////////////////////////////////////////////////////////////////////////////////////
-    //	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
-//    	if (charsRead < 0){
-//      		error("ERROR reading from socket");
-//    	}  
-		// put buffer into plaintext to use later
-//		strcat(plaintext, tempBuffer);
+    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+    	//////////////////////////////////////////////////////////////////////////////////
+    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
+    	if (charsRead < 0){
+      		error("ERROR reading from socket");
+    	}  
+		 put buffer into plaintext to use later
+		strcat(plaintext, tempBuffer);
 		
-
-
-       int len;
-	   // Send message to server
-       len = msgSize;
-	   if (recvall(connectionSocket, tempBuffer, &len) == -1) {
-		
-	////////////////////////////////////////////////////////////////////////////////////
-   // printf("Client: This is size of msg being sent in sendall %d\n", len);
-		
-      perror("sendall");
-      printf("We only sent %d bytes because of the error!\n", len);
-	  } 
-
 
 
 
