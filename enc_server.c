@@ -40,7 +40,7 @@ int recv_timeout(int s , int timeout)
 	double timediff;
 	
 	//make socket non blocking
-	fcntl(s, F_SETFL, O_NONBLOCK);
+	fcntl(s, F_SETFL);
 	
 	//beginning time
 	gettimeofday(&begin , NULL);
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]){
 	
 // 		// Get the message from the client
     	memset(tempBuffer, '\0', MAXSIZE);
-    	memset(plaintext, '\0', MAXSIZE);
+    //	memset(plaintext, '\0', MAXSIZE);
     	// Read the client's message from the socket
     		//Now receive full data
 		charsRead = recv_timeout(connectionSocket, 4);
