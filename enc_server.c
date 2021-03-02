@@ -40,7 +40,7 @@ int recv_timeout(int s , int timeout)
 	double timediff;
 	
 	//make socket non blocking
-	fcntl(s, F_SETFL);
+	fcntl(s, F_SETFL, O_NONBLOCK);
 	
 	//beginning time
 	gettimeofday(&begin , NULL);
@@ -66,7 +66,7 @@ int recv_timeout(int s , int timeout)
 		
 		memset(chunk , 0, CHUNK_SIZE);	//clear the variable
 		memset(plaintext, '\0', CHUNK_SIZE);
-		if((size_recv =  recv(s , chunk , CHUNK_SIZE , 0) ) < 0)
+		if((size_recv =  recv(s , chunk , CHUNK_SIZE , MSG_DONTWAIT) ) < 0)
 		{
 			//if nothing was received then we want to wait a little before trying again, 0.1 seconds
 			usleep(100000);
@@ -217,12 +217,12 @@ int main(int argc, char *argv[]){
 	
 	
 // 		// Get the message from the client
-    	memset(tempBuffer, '\0', MAXSIZE);
-    	memset(plaintext, '\0', MAXSIZE);
+//   	memset(tempBuffer, '\0', MAXSIZE);
+//    	memset(plaintext, '\0', MAXSIZE);
     	// Read the client's message from the socket
     		//Now receive full data
-	//	charsRead = recv_timeout(connectionSocket, 4);
-    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+		charsRead = recv_timeout(connectionSocket, 4);
+    //	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
     	////////////////////////////////////////////////////////////////////////////////////
     //	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
     
@@ -230,8 +230,8 @@ int main(int argc, char *argv[]){
       		error("ERROR reading from socket");
     	}   
 		// put buffer into plaintext to use later
-		strcat(plaintext, tempBuffer);
-//		
+//		strcat(plaintext, tempBuffer);
+		
 
 
 
