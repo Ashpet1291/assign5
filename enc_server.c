@@ -218,11 +218,11 @@ int main(int argc, char *argv[]){
 	
 // 		// Get the message from the client
     	memset(tempBuffer, '\0', MAXSIZE);
-    //	memset(plaintext, '\0', MAXSIZE);
+    	memset(plaintext, '\0', MAXSIZE);
     	// Read the client's message from the socket
     		//Now receive full data
-		charsRead = recv_timeout(connectionSocket, 4);
-    	//charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+	//	charsRead = recv_timeout(connectionSocket, 4);
+    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
     	////////////////////////////////////////////////////////////////////////////////////
     //	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
     
