@@ -41,11 +41,12 @@ int recv_timeout(int s , int timeout)
 	double timediff;
 	
 	//make socket non blocking
-	fcntl(s, F_SETFL, O_NONBLOCK);
+	fcntl(s, F_SETFL);
 	
 	//beginning time
 	gettimeofday(&begin , NULL);
-	memset(plaintext, '\0', CHUNK_SIZE);	
+	memset(plaintext, '\0', CHUNK_SIZE);
+		
 	while(1)
 	{
 		gettimeofday(&now , NULL);
@@ -75,12 +76,11 @@ int recv_timeout(int s , int timeout)
 		else
 		{
 			total_size += size_recv;
+			strcat(plaintext, chunk);
 		//	printf("%s" , chunk);
 			//reset beginning time
 			gettimeofday(&begin , NULL);
 		}
-		
-		strcat(plaintext, chunk);
 	}
 	
 	return total_size;
