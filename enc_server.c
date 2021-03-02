@@ -230,7 +230,7 @@ int main(int argc, char *argv[]){
       		error("ERROR reading from socket");
     	}   
 		// put buffer into plaintext to use later
-//		strcat(plaintext, tempBuffer);
+		strcat(plaintext, tempBuffer);
 //		
 
 
