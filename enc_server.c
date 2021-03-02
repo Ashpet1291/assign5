@@ -192,7 +192,7 @@ int main(int argc, char *argv[]){
     	if (charsRead < 0){
       		error("ERROR reading from socket");
     	}  
-		 put buffer into plaintext to use later
+		// put buffer into plaintext to use later
 		strcat(plaintext, tempBuffer);
 		
 
