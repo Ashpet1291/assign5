@@ -85,27 +85,7 @@ int recv_timeout(int s , int timeout)
 	
 	return total_size;
 }
-//int recvtimeout(int s, char *buf, int len, int timeout)
-//{
-//  fd_set fds;
-//  int n;
-//  struct timeval tv;
-//
-//  // set up the file descriptor set
-//  FD_ZERO(&fds);
-//  FD_SET(s, &fds);
-//  // set up the struct timeval for the timeout
-//  tv.tv_sec = timeout;
-//  tv.tv_usec = 0;
-//
-//  // wait until timeout or data received
-//  n = select(s+1, &fds, NULL, NULL, &tv);
-//  if (n == 0) return -2; // timeout!
-//  if (n == -1) return -1; // error
-//
-//  // data must be here, so do a normal recv()
-//  return recv(s, buf, len, 0);
-// }
+
  
  int recvall(int s, char *buf, int *len)
 {
@@ -115,9 +95,9 @@ int recv_timeout(int s , int timeout)
     int n;
 
     while(total < *len) {
-        n = recv(s, buf+total, bytesleft, 0);
+        n = recv(s, buf, bytesleft, 0);
         if (n == -1) { break; }
-        strcat(plaintext, buf+total);
+        strcat(plaintext, buf);
         total += n;
         bytesleft -= n;
         memset(buf, '\0', MAXSIZE);
