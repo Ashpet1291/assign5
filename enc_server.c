@@ -23,6 +23,8 @@
 #define CHUNK_SIZE 1024
 
 
+char plaintext[MAXSIZE];
+char tempBuffer[1000];
 
 // Error function used for reporting issues
 void error(const char *msg) {
@@ -33,8 +35,6 @@ void error(const char *msg) {
 
 int recv_timeout(int s , int timeout)
 {
-//	char tempBuffer[1024];
-	char plaintext[MAXSIZE]; 
 	int size_recv , total_size= 0;
 	struct timeval begin , now;
 	char chunk[CHUNK_SIZE];
@@ -45,7 +45,7 @@ int recv_timeout(int s , int timeout)
 	
 	//beginning time
 	gettimeofday(&begin , NULL);
-	
+	memset(plaintext, '\0', CHUNK_SIZE);	
 	while(1)
 	{
 		gettimeofday(&now , NULL);
@@ -66,7 +66,7 @@ int recv_timeout(int s , int timeout)
 		}
 		
 		memset(chunk , 0, CHUNK_SIZE);	//clear the variable
-		memset(plaintext, '\0', CHUNK_SIZE);
+	//	memset(plaintext, '\0', CHUNK_SIZE);
 		if((size_recv =  recv(s , chunk , CHUNK_SIZE , MSG_DONTWAIT) ) < 0)
 		{
 			//if nothing was received then we want to wait a little before trying again, 0.1 seconds
@@ -118,12 +118,10 @@ int main(int argc, char *argv[]){
 	//  size_t NumberOfElements = sizeof(buffer)/sizeof(buffer[0]);
   	socklen_t sizeOfClientInfo = sizeof(clientAddress);
   
-  	char plaintext[MAXSIZE]; 
+// 	char plaintext[MAXSIZE]; 
   	char key[MAXSIZE];  
   	char ciphertext[MAXSIZE]; 
   	  	
-	char tempBuffer[1024];
-
 	int keySize;
 	int msgSize;
 	int encryption;
@@ -201,23 +199,22 @@ int main(int argc, char *argv[]){
 	
 	
  		// Get the message from the client
-   	    memset(tempBuffer, '\0', MAXSIZE);
-    	memset(plaintext, '\0', MAXSIZE);
-    	// Read the client's message from the socket
+ 		
+//   	memset(tempBuffer, '\0', MAXSIZE);
+//    	memset(plaintext, '\0', MAXSIZE);
+
     	//Now receive full data
-//		charsRead = recv_timeout(connectionSocket, 4);
-    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+	  	charsRead = recv_timeout(connectionSocket, 4);
+//    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
     	////////////////////////////////////////////////////////////////////////////////////
     //	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
     
-    
-    
+      
     	if (charsRead < 0){
       		error("ERROR reading from socket");
     	}  
-
 		// put buffer into plaintext to use later
-		strcat(plaintext, tempBuffer);
+//		strcat(plaintext, tempBuffer);
 		
 
 
