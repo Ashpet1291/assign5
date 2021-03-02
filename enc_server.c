@@ -106,23 +106,25 @@ int recv_timeout(int s , int timeout)
 //  return recv(s, buf, len, 0);
 // }
  
-// int recvall(int s, char *buf, int *len)
-//{
-//    int total = 0;        // how many bytes we've sent
-//    int bytesleft = *len; // how many we have left to send
-//    int n;
-//
-//    while(total < *len) {
-//        n = recv(s, buf+total, bytesleft, 0);
-//        if (n == -1) { break; }
-//        total += n;
-//        bytesleft -= n;
-//    }
-//
-//    *len = total; // return number actually sent here
-//
-//    return n==-1?-1:0; // return -1 on failure, 0 on success
-//} 
+ int recvall(int s, char *buf, int *len)
+{
+    int total = 0;        // how many bytes we've sent
+    int bytesleft = *len; // how many we have left to send
+    int n;
+
+    while(total < *len) {
+        n = recv(s, buf+total, bytesleft, 0);
+        if (n == -1) { break; }
+        strcat(plaintext, tempBuffer);
+        total += n;
+        bytesleft -= n;
+        memset(tempBuffer, '\0', MAXSIZE);
+    }
+
+    *len = total; // return number actually sent here
+
+    return n==-1?-1:0; // return -1 on failure, 0 on success
+} 
 
 
 int main(int argc, char *argv[]){
@@ -221,19 +223,22 @@ int main(int argc, char *argv[]){
 //    	memset(plaintext, '\0', MAXSIZE);
     	// Read the client's message from the socket
     		//Now receive full data
-		charsRead = recv_timeout(connectionSocket, 4);
+//		charsRead = recv_timeout(connectionSocket, 4);
     //	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
     	////////////////////////////////////////////////////////////////////////////////////
     //	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));
     
-    	if (charsRead < 0){
-      		error("ERROR reading from socket");
-    	}   
+    
+    
+//    	if (charsRead < 0){
+//      		error("ERROR reading from socket");
+//    	}  
+
+
+ 
 		// put buffer into plaintext to use later
 //		strcat(plaintext, tempBuffer);
 		
-
-
 
 
 //		n = recvtimeout(s, buf, sizeof buf, 10); // 10 second timeout
@@ -250,19 +255,17 @@ int main(int argc, char *argv[]){
 //		}
 
 
-
-
-//		int len;
-//	   // Send message to server
-//       len = msgSize;
-//	   if (recvall(connectionSocket, tempBuffer, &len) == -1) {
-//		
-//	////////////////////////////////////////////////////////////////////////////////////
-//   // printf("Client: This is size of msg being sent in sendall %d\n", len);
-//		
-//    perror("sendall");
-//    printf("We only sent %d bytes because of the error!\n", len);
-//	} 
+		int len;
+	   // Send message to server
+       len = msgSize;
+	   if (recvall(connectionSocket, tempBuffer, &len) == -1) {
+		
+	////////////////////////////////////////////////////////////////////////////////////
+   // printf("Client: This is size of msg being sent in sendall %d\n", len);
+		
+    perror("sendall");
+    printf("We only sent %d bytes because of the error!\n", len);
+	} 
 
 
 
