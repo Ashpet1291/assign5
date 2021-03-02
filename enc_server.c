@@ -94,11 +94,12 @@ int recv_timeout(int s , int timeout)
     int total = 0;        // how many bytes we've sent
     int bytesleft = *len; // how many we have left to send
     int n;
+    int chunksize = 500;
 
     while(total < *len) {
     	
     	memset(buf, '\0', MAXSIZE);
-        n = recv(s, buf, bytesleft, 0);
+        n = recv(s, buf, chunksize, 0);
         if (n == -1) { break; }
         strcat(plaintext, buf);
         total += n;
