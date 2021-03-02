@@ -33,6 +33,7 @@ void error(const char *msg) {
 
 int recv_timeout(int s , int timeout)
 {
+//	char tempBuffer[1024];
 	char plaintext[MAXSIZE]; 
 	int size_recv , total_size= 0;
 	struct timeval begin , now;
@@ -108,6 +109,7 @@ int recv_timeout(int s , int timeout)
  
  int recvall(int s, char *buf, int *len)
 {
+	char plaintext[MAXSIZE];
     int total = 0;        // how many bytes we've sent
     int bytesleft = *len; // how many we have left to send
     int n;
@@ -115,10 +117,10 @@ int recv_timeout(int s , int timeout)
     while(total < *len) {
         n = recv(s, buf+total, bytesleft, 0);
         if (n == -1) { break; }
-        strcat(plaintext, tempBuffer);
+        strcat(plaintext, buf+total);
         total += n;
         bytesleft -= n;
-        memset(tempBuffer, '\0', MAXSIZE);
+        memset(buf, '\0', MAXSIZE);
     }
 
     *len = total; // return number actually sent here
