@@ -34,57 +34,66 @@ void error(const char *msg) {
 
 // recieve full data
 //https://www.binarytides.com/receive-full-data-with-recv-socket-function-in-c/
-int recv_timeout(int s , int timeout)
-{
-	int size_recv , total_size= 0;
-	struct timeval begin , now;
-	char chunk[CHUNK_SIZE];
-	double timediff;
-	
-	//make socket non blocking
-	fcntl(s, F_SETFL);
-	
-	//beginning time
-	gettimeofday(&begin , NULL);
-	memset(plaintext, '\0', CHUNK_SIZE);
-		
-	while(1)
-	{
-		gettimeofday(&now , NULL);
-		
-		//time elapsed in seconds
-		timediff = (now.tv_sec - begin.tv_sec) + 1e-6 * (now.tv_usec - begin.tv_usec);
-		
-		//if you got some data, then break after timeout
-		if( total_size > 0 && timediff > timeout )
-		{
-			break;
-		}
-		
-		//if you got no data at all, wait a little longer, twice the timeout
-		else if( timediff > timeout*2)
-		{
-			break;
-		}
-		
-		memset(chunk , 0, CHUNK_SIZE);	//clear the variable
-	//	memset(plaintext, '\0', CHUNK_SIZE);
-		if((size_recv =  recv(s , chunk , CHUNK_SIZE , MSG_DONTWAIT) ) < 0)
-		{
-			//if nothing was received then we want to wait a little before trying again, 0.1 seconds
-			usleep(100000);
-		}
-		else
-		{
-			total_size += size_recv;
-			strcat(plaintext, chunk);
-		//	printf("%s" , chunk);
-			//reset beginning time
-			gettimeofday(&begin , NULL);
-		}
+//int recv_timeout(int s , int timeout)
+//{
+//	int size_recv , total_size= 0;
+//	struct timeval begin , now;
+//	char chunk[CHUNK_SIZE];
+//	double timediff;
+//	
+//	//make socket non blocking
+//	fcntl(s, F_SETFL);
+//	
+//	//beginning time
+//	gettimeofday(&begin , NULL);
+//	memset(plaintext, '\0', CHUNK_SIZE);
+//		
+//	while(1)
+//	{
+//		gettimeofday(&now , NULL);
+//		
+//		//time elapsed in seconds
+//		timediff = (now.tv_sec - begin.tv_sec) + 1e-6 * (now.tv_usec - begin.tv_usec);
+//		
+//		//if you got some data, then break after timeout
+//		if( total_size > 0 && timediff > timeout )
+//		{
+//			break;
+//		}
+//		
+//		//if you got no data at all, wait a little longer, twice the timeout
+//		else if( timediff > timeout*2)
+//		{
+//			break;
+//		}
+//		
+//		memset(chunk , 0, CHUNK_SIZE);	//clear the variable
+//	//	memset(plaintext, '\0', CHUNK_SIZE);
+//		if((size_recv =  recv(s , chunk , CHUNK_SIZE , MSG_DONTWAIT) ) < 0)
+//		{
+//			//if nothing was received then we want to wait a little before trying again, 0.1 seconds
+//			usleep(100000);
+//		}
+//		else
+//		{
+//			total_size += size_recv;
+//			strcat(plaintext, chunk);
+//		//	printf("%s" , chunk);
+//			//reset beginning time
+//			gettimeofday(&begin , NULL);
+//		}
+//	}
+//	
+//	return total_size;
+//}
+
+void loopread(int establishedConnectionFD, char *text, char *readBuffer) {
+
+	while (strstr(text, "@@") == NULL) {
+		memset(readBuffer, '\0', sizeof(readBuffer));
+		recv(establishedConnectionFD, readBuffer, 10000, 0); // Read the client's message from the socket
+		strcat(text, readBuffer);	// appends buffer to text
 	}
-	
-	return total_size;
 }
 
  
@@ -178,22 +187,30 @@ int main(int argc, char *argv[]){
 	
 	
  		// Get the message from the client
- 		
-   		memset(tempBuffer, '\0', MAXSIZE);
+   //		memset(tempBuffer, '\0', MAXSIZE);
     	memset(plaintext, '\0', MAXSIZE);
 
     	//Now receive full data
 //	  	charsRead = recv_timeout(connectionSocket, 4);
 
 
-    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-    	//////////////////////////////////////////////////////////////////////////////////
-    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
-    	if (charsRead < 0){
-      		error("ERROR reading from socket");
-    	}  
-		// put buffer into plaintext to use later
-		strcat(plaintext, tempBuffer);
+		while (strstr(plaintext, "@@") == NULL) {
+			memset(tempBuffer, '\0', sizeof(tempBuffer));
+			recv(connectionSocket, tempBuffer, 10000, 0); // Read the client's message from the socket
+			strcat(plaintext, tempBuffer);	// appends buffer to text
+		}
+
+		int size = strlen(plaintext)-1;
+		plaintext[size] = '\0';	// write over '@'
+		plaintext[size-1] = '\0';
+//    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+//    	//////////////////////////////////////////////////////////////////////////////////
+////    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
+//    	if (charsRead < 0){
+//      		error("ERROR reading from socket");
+//    	}  
+//		// put buffer into plaintext to use later
+//		strcat(plaintext, tempBuffer);
 		
 
 
