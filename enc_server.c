@@ -24,7 +24,7 @@
 
 
 char plaintext[MAXSIZE];
-char tempBuffer[1000];
+char tempBuffer[10000];
 
 // Error function used for reporting issues
 void error(const char *msg) {
@@ -86,15 +86,6 @@ void error(const char *msg) {
 //	
 //	return total_size;
 //}
-
-void loopread(int establishedConnectionFD, char *text, char *readBuffer) {
-
-	while (strstr(text, "@@") == NULL) {
-		memset(readBuffer, '\0', sizeof(readBuffer));
-		recv(establishedConnectionFD, readBuffer, 10000, 0); // Read the client's message from the socket
-		strcat(text, readBuffer);	// appends buffer to text
-	}
-}
 
  
 int main(int argc, char *argv[]){
@@ -194,7 +185,7 @@ int main(int argc, char *argv[]){
 //	  	charsRead = recv_timeout(connectionSocket, 4);
 
 
-		while (strstr(plaintext, "@@") == NULL) {
+		while (strstr(plaintext, "$$") == NULL) {
 			memset(tempBuffer, '\0', sizeof(tempBuffer));
 			charsRead = recv(connectionSocket, tempBuffer, 10000, 0); // Read the client's message from the socket
 			if (charsRead < 0){
