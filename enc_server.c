@@ -196,7 +196,10 @@ int main(int argc, char *argv[]){
 
 		while (strstr(plaintext, "@@") == NULL) {
 			memset(tempBuffer, '\0', sizeof(tempBuffer));
-			recv(connectionSocket, tempBuffer, 10000, 0); // Read the client's message from the socket
+			charsRead = recv(connectionSocket, tempBuffer, 10000, 0); // Read the client's message from the socket
+			if (charsRead < 0){
+      			error("ERROR reading from socket");
+    		} 
 			strcat(plaintext, tempBuffer);	// appends buffer to text
 		}
 
