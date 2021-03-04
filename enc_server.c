@@ -25,6 +25,8 @@
 char plaintext[MAXSIZE];
 char tempBuffer[10000];
 
+	
+
 // Error function used for reporting issues
 void error(const char *msg) {
   perror(msg);
@@ -53,6 +55,13 @@ int main(int argc, char *argv[]){
 	
 	int status;
 	pid_t pid;
+	
+	
+	int p = 0;
+	int plaintextInt =0;
+	int keyInt = 0;
+	int ciphertextInt = 0;
+	int i;
 	
   	// Check usage & args
  	if (argc < 2) { 
@@ -128,7 +137,7 @@ int main(int argc, char *argv[]){
     	memset(plaintext, '\0', MAXSIZE);
 
 
-		while (strstr(plaintext, "$$") == NULL) {
+		while (strstr(plaintext, "$") == NULL) {
 			memset(tempBuffer, '\0', sizeof(tempBuffer));
 			charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
 			if (charsRead < 0){
@@ -139,9 +148,7 @@ int main(int argc, char *argv[]){
 
 		int size = strlen(plaintext)-1;
 		plaintext[size] = '\0';	
-		plaintext[size-1] = '\0';
-
-
+	
 //    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
 //    	//////////////////////////////////////////////////////////////////////////////////
 ////    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
@@ -193,14 +200,7 @@ int main(int argc, char *argv[]){
 		// add the message from client in key	
 		strcat(key, buffer);
     
-     	// encryption
-		int p = 0;
-		int plaintextInt =0;
-		int keyInt = 0;
-		int ciphertextInt = 0;
-	
-		int i;
-	
+     
 		////////////////////////////////////////////////////////////////////////////////////
     //	printf("SERVER: This is size of plaintext before encryption %d\n", strlen(plaintext));
     // used for reference
