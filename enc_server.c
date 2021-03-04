@@ -24,7 +24,7 @@
 
 
 char plaintext[MAXSIZE];
-char tempBuffer[1000];
+char tempBuffer[10000];
 
 // Error function used for reporting issues
 void error(const char *msg) {
