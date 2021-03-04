@@ -125,33 +125,32 @@ int main(int argc, char *argv[]){
 	
 	
  		// Get the message from the client
-   //		memset(tempBuffer, '\0', MAXSIZE);
+   		memset(tempBuffer, '\0', MAXSIZE);
     	memset(plaintext, '\0', MAXSIZE);
+//
+//
+//		while (strstr(plaintext, "$$") == NULL) {
+//			memset(tempBuffer, '\0', sizeof(tempBuffer));
+//			charsRead = recv(connectionSocket, tempBuffer, 1000, 0); 
+//			if (charsRead < 0){
+//      			error("ERROR reading from socket");
+//    		} 
+//			strcat(plaintext, tempBuffer);	
+//		}
+//
+//		int size = strlen(plaintext)-1;
+//		plaintext[size] = '\0';	
+//		plaintext[size-1] = '\0';
 
-    	//Now receive full data
-//	  	charsRead = recv_timeout(connectionSocket, 4);
 
-
-		while (strstr(plaintext, "$$") == NULL) {
-			memset(tempBuffer, '\0', sizeof(tempBuffer));
-			charsRead = recv(connectionSocket, tempBuffer, 1000, 0); // Read the client's message from the socket
-			if (charsRead < 0){
-      			error("ERROR reading from socket");
-    		} 
-			strcat(plaintext, tempBuffer);	// appends buffer to text
-		}
-
-		int size = strlen(plaintext)-1;
-		plaintext[size] = '\0';	// write over '@'
-		plaintext[size-1] = '\0';
-//    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-//    	//////////////////////////////////////////////////////////////////////////////////
-////    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
-//    	if (charsRead < 0){
-//      		error("ERROR reading from socket");
-//    	}  
-//		// put buffer into plaintext to use later
-//		strcat(plaintext, tempBuffer);
+    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+    	//////////////////////////////////////////////////////////////////////////////////
+//    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
+    	if (charsRead < 0){
+      		error("ERROR reading from socket");
+    	}  
+		// put buffer into plaintext to use later
+		strcat(plaintext, tempBuffer);
 		
 
 		// sends success message 2 to client- msg received
