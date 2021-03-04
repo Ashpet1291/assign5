@@ -147,7 +147,7 @@ int main(int argc, char *argv[]){
 		}
 
 		int size = strlen(plaintext)-1;
-		plaintext[size-1] = '\0';	
+		plaintext[size] = '\0';	
 	
 //    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
 //    	//////////////////////////////////////////////////////////////////////////////////
