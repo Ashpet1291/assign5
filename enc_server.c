@@ -158,6 +158,7 @@ int main(int argc, char *argv[]){
 		// put buffer into plaintext to use later
 		strcat(plaintext, tempBuffer);
 		
+		plaintext[msgSize] = '\0';
 
 		// sends success message 2 to client- msg received
 	 	charsRead = send(connectionSocket, 
