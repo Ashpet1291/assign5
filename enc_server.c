@@ -24,7 +24,7 @@
 
 
 char plaintext[MAXSIZE];
-char tempBuffer[10000];
+char tempBuffer[1000];
 
 // Error function used for reporting issues
 void error(const char *msg) {
@@ -32,60 +32,7 @@ void error(const char *msg) {
   exit(1);
 } 
 
-// recieve full data
-//https://www.binarytides.com/receive-full-data-with-recv-socket-function-in-c/
-//int recv_timeout(int s , int timeout)
-//{
-//	int size_recv , total_size= 0;
-//	struct timeval begin , now;
-//	char chunk[CHUNK_SIZE];
-//	double timediff;
-//	
-//	//make socket non blocking
-//	fcntl(s, F_SETFL);
-//	
-//	//beginning time
-//	gettimeofday(&begin , NULL);
-//	memset(plaintext, '\0', CHUNK_SIZE);
-//		
-//	while(1)
-//	{
-//		gettimeofday(&now , NULL);
-//		
-//		//time elapsed in seconds
-//		timediff = (now.tv_sec - begin.tv_sec) + 1e-6 * (now.tv_usec - begin.tv_usec);
-//		
-//		//if you got some data, then break after timeout
-//		if( total_size > 0 && timediff > timeout )
-//		{
-//			break;
-//		}
-//		
-//		//if you got no data at all, wait a little longer, twice the timeout
-//		else if( timediff > timeout*2)
-//		{
-//			break;
-//		}
-//		
-//		memset(chunk , 0, CHUNK_SIZE);	//clear the variable
-//	//	memset(plaintext, '\0', CHUNK_SIZE);
-//		if((size_recv =  recv(s , chunk , CHUNK_SIZE , MSG_DONTWAIT) ) < 0)
-//		{
-//			//if nothing was received then we want to wait a little before trying again, 0.1 seconds
-//			usleep(100000);
-//		}
-//		else
-//		{
-//			total_size += size_recv;
-//			strcat(plaintext, chunk);
-//		//	printf("%s" , chunk);
-//			//reset beginning time
-//			gettimeofday(&begin , NULL);
-//		}
-//	}
-//	
-//	return total_size;
-//}
+
 
  
 int main(int argc, char *argv[]){
@@ -187,7 +134,7 @@ int main(int argc, char *argv[]){
 
 		while (strstr(plaintext, "$$") == NULL) {
 			memset(tempBuffer, '\0', sizeof(tempBuffer));
-			charsRead = recv(connectionSocket, tempBuffer, 10000, 0); // Read the client's message from the socket
+			charsRead = recv(connectionSocket, tempBuffer, 1000, 0); // Read the client's message from the socket
 			if (charsRead < 0){
       			error("ERROR reading from socket");
     		} 
@@ -206,8 +153,6 @@ int main(int argc, char *argv[]){
 //		// put buffer into plaintext to use later
 //		strcat(plaintext, tempBuffer);
 		
-
-
 
 		// sends success message 2 to client- msg received
 	 	charsRead = send(connectionSocket, 
