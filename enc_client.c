@@ -139,7 +139,11 @@ int main(int argc, char *argv[]) {
   // The address should be network capable
   serverAddress.sin_family = AF_INET;
   // Store the port number
-  portNumber = atoi(argv[2]);
+  portNumber = atoi(argv[3]);
+  
+  
+  ///////////////////////////////////////////////////////////////////////////
+  printf("this is client %s\n", argv[3]);
   
 //  if(portNumber != )
   serverAddress.sin_port = htons(portNumber);
