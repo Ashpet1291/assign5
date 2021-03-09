@@ -142,6 +142,16 @@ int main(int argc, char *argv[]) {
   serverAddress.sin_family = AF_INET;
   // Store the port number
   portNumber = atoi(argv[3]);
+  
+  // if decoding port tris to connect to port 1
+  prtinf("this is arg 0 %s\n", argv[0]);
+  prtinf("this is arg 1 %s\n", argv[1])
+  prtinf("this is arg 2 %s\n", argv[2])
+  prtinf("this is arg 3 %s\n", argv[3])
+
+
+  
+  
   serverAddress.sin_port = htons(portNumber);
 
   // Get the DNS entry for this host name
