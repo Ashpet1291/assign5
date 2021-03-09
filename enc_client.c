@@ -122,6 +122,12 @@ int main(int argc, char *argv[]) {
   struct hostent* hostInfo;
   char buffer[MAXSIZE];
   
+  printf("this is arg 0 %s\n", argv[0]);
+  printf("this is arg 1 %s\n", argv[1]);
+  printf("this is arg 2 %s\n", argv[2]);
+  printf("this is arg 3 %s\n", argv[3]);
+//  printf("this is arg 4 %s\n", argv[4]);
+  
   // Check usage & args
   if (argc < 3) { 
     fprintf(stderr,"USAGE: %s hostname port\n", argv[0]); 
@@ -143,7 +149,7 @@ int main(int argc, char *argv[]) {
   
   
   ///////////////////////////////////////////////////////////////////////////
-  printf("this is client %s\n", argv[3]);
+  //printf("this is client %s\n", argv[3]); first port
   
 //  if(portNumber != )
   serverAddress.sin_port = htons(portNumber);
