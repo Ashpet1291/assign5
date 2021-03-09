@@ -137,28 +137,31 @@ int main(int argc, char *argv[]){
     	memset(plaintext, '\0', MAXSIZE);
 
 
-//		while (strstr(plaintext, "$") == NULL) {
-//			memset(tempBuffer, '\0', sizeof(tempBuffer));
-//			charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-//			if (charsRead < 0){
-//      			error("ERROR reading from socket");
-//    		} 
-//			strcat(plaintext, tempBuffer);	
-//		}
-//
-//		int size = strlen(plaintext)-1;
-//		plaintext[size] = '\0';	
+		while (strstr(plaintext, "$") == NULL) {
+			memset(tempBuffer, '\0', sizeof(tempBuffer));
+			charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+			if (charsRead < 0){
+      			error("ERROR reading from socket");
+    		} 
+			strcat(plaintext, tempBuffer);	
+		}
+
+		int size = strlen(plaintext)-1;
+		plaintext[size] = '\0';	
 	
-    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-    	//////////////////////////////////////////////////////////////////////////////////
-//    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
-    	if (charsRead < 0){
-      		error("ERROR reading from socket");
-    	}  
-		// put buffer into plaintext to use later
-		strcat(plaintext, tempBuffer);
+//    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+//    	//////////////////////////////////////////////////////////////////////////////////
+////    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
+//    	if (charsRead < 0){
+//      		error("ERROR reading from socket");
+//    	}  
+//		// put buffer into plaintext to use later
+//		strcat(plaintext, tempBuffer);
+//		
+//		plaintext[msgSize-1] = '\0';
 		
-		plaintext[msgSize-1] = '\0';
+		
+		
 
 		// sends success message 2 to client- msg received
 	 	charsRead = send(connectionSocket, 
