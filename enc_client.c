@@ -111,13 +111,9 @@ void checkChars(char tempList[]) {
 			fprintf(stderr,"error: input contains bad characters\n");
 			break;
 			exit(1);
-		}
-//			if (charac > 90) {
-//				fprintf(stderr,"error: input contains bad characters");
-//				exit(1); 
-//				}	
-		}
+		}	
 	}
+}
 
 
 int main(int argc, char *argv[]) {
@@ -143,7 +139,9 @@ int main(int argc, char *argv[]) {
   // The address should be network capable
   serverAddress.sin_family = AF_INET;
   // Store the port number
-  portNumber = atoi(argv[3]);
+  portNumber = atoi(argv[2]);
+  
+//  if(portNumber != )
   serverAddress.sin_port = htons(portNumber);
 
   // Get the DNS entry for this host name
