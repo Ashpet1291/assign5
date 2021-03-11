@@ -297,36 +297,36 @@ int main(int argc, char *argv[]){
 
 	
 	
-		int cipherLen;
-
-//    	char variable[] = "$";
-//		strcat(ciphertext, variable);   
-    
-		// Send message to server
-    	cipherLen = strlen(ciphertext);
-		if (sendall(connectionSocket, ciphertext, &cipherLen) == -1) {
-		
-		////////////////////////////////////////////////////////////////////////////////////
-   		// printf("Client: This is size of msg being sent in sendall %d\n", len);
-		
-   		perror("sendall cipher");
-    	printf("We only sent %d bytes because of the error!\n", cipherLen);
-		} 
-  		memset(ciphertext, '\0', sizeof(ciphertext));
+//		int cipherLen;
+//
+////    	char variable[] = "$";
+////		strcat(ciphertext, variable);   
+//    
+//		// Send message to server
+//    	cipherLen = strlen(ciphertext);
+//		if (sendall(connectionSocket, ciphertext, &cipherLen) == -1) {
+//		
+//		////////////////////////////////////////////////////////////////////////////////////
+//   		// printf("Client: This is size of msg being sent in sendall %d\n", len);
+//		
+//   		perror("sendall cipher");
+//    	printf("We only sent %d bytes because of the error!\n", cipherLen);
+//		} 
+//  		memset(ciphertext, '\0', sizeof(ciphertext));
   		
   		
   		  		
-//    	// send encrypted text to client
-//    	charsRead = send(connectionSocket, ciphertext, strlen(ciphertext), 0);
-//    	
-//    	////////////////////////////////////////////////////////////////////////////////////
-//    //	printf("SERVER: This is size of sending cipher %d\n", strlen(ciphertext));
-//    	memset(ciphertext, '\0', MAXSIZE);
-//
-//   		// error sending to socket
-//		if (charsRead < 0){
-//      		error("ERROR writing to socket");
-//   		}
+    	// send encrypted text to client
+    	charsRead = send(connectionSocket, ciphertext, strlen(ciphertext), 0);
+    	
+    	////////////////////////////////////////////////////////////////////////////////////
+    //	printf("SERVER: This is size of sending cipher %d\n", strlen(ciphertext));
+    	memset(ciphertext, '\0', MAXSIZE);
+
+   		// error sending to socket
+		if (charsRead < 0){
+      		error("ERROR writing to socket");
+   		}
 
  		// close connection in child process
    		close(connectionSocket);
