@@ -346,34 +346,34 @@ int main(int argc, char *argv[]) {
  
     // receives encrypted text from server
     // Clear out the buffer again for reuse
-    memset(tempBuffer, '\0', sizeof(tempBuffer));
+    memset(buffer, '\0', sizeof(buffer));
     
     
     
-    while (strstr(buffer, "$") == NULL) {
-		memset(buffer, '\0', sizeof(buffer));
-		charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
-		if (charsRead < 0){
-    		error("ERROR reading from socket");
-    	} 
-		strcat(tempBuffer, buffer);	
-	}
-
-	//	int size = strlen(plaintext)-1;
-	tempBuffer[plainSize-1] = '\0';
+//    while (strstr(buffer, "$") == NULL) {
+//		memset(buffer, '\0', sizeof(buffer));
+//		charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
+//		if (charsRead < 0){
+//    		error("ERROR reading from socket");
+//    	} 
+//		strcat(tempBuffer, buffer);	
+//	}
+//
+//	//	int size = strlen(plaintext)-1;
+//	tempBuffer[plainSize-1] = '\0';
 			
     
     // Read data from the socket, leaving \0 at end
- //   charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
+    charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
     
     ////////////////////////////////////////////////////////////////////////////////////
    // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
     
-//    if (charsRead < 0){
-//    	error("CLIENT: ERROR reading from socket");
-//    }
+    if (charsRead < 0){
+    	error("CLIENT: ERROR reading from socket");
+    }
     // print encoded text
-    printf("%s\n", tempBuffer);
+    printf("%s\n", buffer);
     fflush(stdout);
 	
     // Close the socket

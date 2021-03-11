@@ -299,8 +299,8 @@ int main(int argc, char *argv[]){
 	
 		int cipherLen;
 
-    	char variable[] = "$";
-		strcat(ciphertext, variable);   
+//    	char variable[] = "$";
+//		strcat(ciphertext, variable);   
     
 		// Send message to server
     	cipherLen = strlen(ciphertext);
