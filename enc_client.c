@@ -312,7 +312,7 @@ int main(int argc, char *argv[]) {
   
   	int keyLen;
 
-    variable[] = "$";
+  //  variable[0] = "$";
 	strcat(buffer, variable);   
     
 	// Send message to server
