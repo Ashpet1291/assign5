@@ -150,8 +150,6 @@ int main(int argc, char *argv[]) {
 //  printf("this is dec arg 3 %s\n", argv[3]);
 //  printf("this is arg 4 %s\n", argv[4]);
 
-
-  
   
   serverAddress.sin_port = htons(portNumber);
 
