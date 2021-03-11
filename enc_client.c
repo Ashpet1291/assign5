@@ -121,7 +121,6 @@ int main(int argc, char *argv[]) {
   struct sockaddr_in serverAddress;
   struct hostent* hostInfo;
   char buffer[MAXSIZE];
-  char tempBuffer[MAXSIZE];
   
 //  printf("this is enc client arg 0 %s\n", argv[0]);
 //  printf("this is enc client arg 1 %s\n", argv[1]);
@@ -313,18 +312,18 @@ int main(int argc, char *argv[]) {
   
   	int keyLen;
 
-  //  variable[0] = "$";
+    variable[0] = "$";
 	strcat(buffer, variable);   
     
-	// Send key to server
+	// Send message to server
     keyLen = strlen(buffer);
 	if (sendall(socketFD, buffer, &keyLen) == -1) {
 		
 	////////////////////////////////////////////////////////////////////////////////////
    // printf("Client: This is size of msg being sent in sendall %d\n", len);
 		
-    	perror("sendall key");
-    	printf("We only sent %d bytes because of the error!\n", len);
+    perror("sendall key");
+    printf("We only sent %d bytes because of the error!\n", len);
 	} 
   	memset(buffer, '\0', sizeof(buffer));
   
@@ -336,9 +335,9 @@ int main(int argc, char *argv[]) {
     ////////////////////////////////////////////////////////////////////////////////////
    // printf("CLIENT: This is size of sending key %d\n", strlen(buffer));
     	
-//    if (charsWritten < 0){
-//    	error("CLIENT: ERROR writing to socket");
-//    }
+    if (charsWritten < 0){
+    	error("CLIENT: ERROR writing to socket");
+    }
     if (charsWritten < strlen(buffer)){
     	printf("CLIENT: WARNING: Not all data written to socket!\n");
     }
@@ -347,22 +346,6 @@ int main(int argc, char *argv[]) {
     // receives encrypted text from server
     // Clear out the buffer again for reuse
     memset(buffer, '\0', sizeof(buffer));
-    
-    
-    
-//    while (strstr(buffer, "$") == NULL) {
-//		memset(buffer, '\0', sizeof(buffer));
-//		charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
-//		if (charsRead < 0){
-//    		error("ERROR reading from socket");
-//    	} 
-//		strcat(tempBuffer, buffer);	
-//	}
-//
-//	//	int size = strlen(plaintext)-1;
-//	tempBuffer[plainSize-1] = '\0';
-			
-    
     // Read data from the socket, leaving \0 at end
     charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
     
