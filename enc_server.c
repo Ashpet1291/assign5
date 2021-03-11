@@ -328,8 +328,6 @@ int main(int argc, char *argv[]){
 //      		error("ERROR writing to socket");
 //   		}
 
-
-
  		// close connection in child process
    		close(connectionSocket);
   		}

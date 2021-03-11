@@ -316,15 +316,15 @@ int main(int argc, char *argv[]) {
   //  variable[0] = "$";
 	strcat(buffer, variable);   
     
-	// Send message to server
+	// Send key to server
     keyLen = strlen(buffer);
 	if (sendall(socketFD, buffer, &keyLen) == -1) {
 		
 	////////////////////////////////////////////////////////////////////////////////////
    // printf("Client: This is size of msg being sent in sendall %d\n", len);
 		
-    perror("sendall key");
-    printf("We only sent %d bytes because of the error!\n", len);
+    	perror("sendall key");
+    	printf("We only sent %d bytes because of the error!\n", len);
 	} 
   	memset(buffer, '\0', sizeof(buffer));
   
@@ -336,9 +336,9 @@ int main(int argc, char *argv[]) {
     ////////////////////////////////////////////////////////////////////////////////////
    // printf("CLIENT: This is size of sending key %d\n", strlen(buffer));
     	
-    if (charsWritten < 0){
-    	error("CLIENT: ERROR writing to socket");
-    }
+//    if (charsWritten < 0){
+//    	error("CLIENT: ERROR writing to socket");
+//    }
     if (charsWritten < strlen(buffer)){
     	printf("CLIENT: WARNING: Not all data written to socket!\n");
     }
@@ -350,7 +350,7 @@ int main(int argc, char *argv[]) {
     
     
     
-    while (strstr(tempBuffer, "$") == NULL) {
+    while (strstr(buffer, "$") == NULL) {
 		memset(buffer, '\0', sizeof(buffer));
 		charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
 		if (charsRead < 0){
@@ -360,7 +360,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	//	int size = strlen(plaintext)-1;
-		tempBuffer[plainSize-1] = '\0';
+	tempBuffer[plainSize-1] = '\0';
 			
     
     // Read data from the socket, leaving \0 at end
@@ -369,9 +369,9 @@ int main(int argc, char *argv[]) {
     ////////////////////////////////////////////////////////////////////////////////////
    // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
     
-    if (charsRead < 0){
-    	error("CLIENT: ERROR reading from socket");
-    }
+//    if (charsRead < 0){
+//    	error("CLIENT: ERROR reading from socket");
+//    }
     // print encoded text
     printf("%s\n", tempBuffer);
     fflush(stdout);
