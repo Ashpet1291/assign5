@@ -121,6 +121,7 @@ int main(int argc, char *argv[]) {
   struct sockaddr_in serverAddress;
   struct hostent* hostInfo;
   char buffer[MAXSIZE];
+  char tempBuffer[MAXSIZE];
   
 //  printf("this is enc client arg 0 %s\n", argv[0]);
 //  printf("this is enc client arg 1 %s\n", argv[1]);
@@ -345,9 +346,24 @@ int main(int argc, char *argv[]) {
  
     // receives encrypted text from server
     // Clear out the buffer again for reuse
-    memset(buffer, '\0', sizeof(buffer));
+    memset(tempBuffer, '\0', sizeof(tempBuffer));
+    
+    
+    
+    while (strstr(plaintext, "$") == NULL) {
+		memset(buffer, '\0', sizeof(buffer));
+		charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
+		if (charsRead < 0){
+    		error("ERROR reading from socket");
+    	} 
+		strcat(tempBuffer, buffer);	
+	}
+
+	//	int size = strlen(plaintext)-1;
+		tempBuffer[msgSize-1] = '\0';
+    
     // Read data from the socket, leaving \0 at end
-    charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
+ //   charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
     
     ////////////////////////////////////////////////////////////////////////////////////
    // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
