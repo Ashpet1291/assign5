@@ -248,8 +248,6 @@ int main(int argc, char *argv[]) {
 	// check plaintextFile file for bad characters
     checkChars(msg);    
 
-
-
     int len;
 
     char variable[] = "$";
@@ -262,7 +260,7 @@ int main(int argc, char *argv[]) {
 	////////////////////////////////////////////////////////////////////////////////////
    // printf("Client: This is size of msg being sent in sendall %d\n", len);
 		
-    perror("sendall mesage");
+    perror("sendall");
     printf("We only sent %d bytes because of the error!\n", len);
 	} 
   	memset(msg, '\0', sizeof(msg));
@@ -309,28 +307,8 @@ int main(int argc, char *argv[]) {
     }
   
   
-  
-  	int keyLen;
-
-    variable[0] = "$";
-	strcat(buffer, variable);   
-    
-	// Send message to server
-    keyLen = strlen(buffer);
-	if (sendall(socketFD, buffer, &keyLen) == -1) {
-		
-	////////////////////////////////////////////////////////////////////////////////////
-   // printf("Client: This is size of msg being sent in sendall %d\n", len);
-		
-    perror("sendall key");
-    printf("We only sent %d bytes because of the error!\n", len);
-	} 
-  	memset(buffer, '\0', sizeof(buffer));
-  
     // send key string to server
-  //  charsWritten = send(socketFD, buffer, strlen(buffer), 0); 
-    
-    
+    charsWritten = send(socketFD, buffer, strlen(buffer), 0); 
     
     ////////////////////////////////////////////////////////////////////////////////////
    // printf("CLIENT: This is size of sending key %d\n", strlen(buffer));
