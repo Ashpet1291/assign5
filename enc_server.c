@@ -63,6 +63,12 @@ int main(int argc, char *argv[]){
 	int ciphertextInt = 0;
 	int i;
 	
+	
+	printf("this is arg enc server port 0 %s\n", argv[0]);
+    printf("this is arg 1 enc server port %s\n", argv[1]);
+    printf("this is arg 2 %s\n", argv[2]);
+    printf("this is enc server port arg 3 %s\n", argv[3]);
+	
   	// Check usage & args
  	if (argc < 2) { 
     	fprintf(stderr,"USAGE: %s port\n", argv[0]); 
