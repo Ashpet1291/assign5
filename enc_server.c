@@ -34,7 +34,25 @@ void error(const char *msg) {
 } 
 
 
+// makes sure all information is sent
+// this code is from Beejs guide
+int sendall(int s, char *buf, int *len)
+{
+    int total = 0;        // how many bytes we've sent
+    int bytesleft = *len; // how many we have left to send
+    int n;
 
+    while(total < *len) {
+        n = send(s, buf+total, bytesleft, 0);
+        if (n == -1) { break; }
+        total += n;
+        bytesleft -= n;
+    }
+
+    *len = total; // return number actually sent here
+
+    return n==-1?-1:0; // return -1 on failure, 0 on success
+} 
  
 int main(int argc, char *argv[]){
 	int connectionSocket, newConnectionSocket, charsRead, portNumber;
@@ -142,29 +160,29 @@ int main(int argc, char *argv[]){
    		memset(tempBuffer, '\0', MAXSIZE);
     	memset(plaintext, '\0', MAXSIZE);
 
-
-		while (strstr(plaintext, "$") == NULL) {
-			memset(tempBuffer, '\0', sizeof(tempBuffer));
-			charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-			if (charsRead < 0){
-      			error("ERROR reading from socket");
-    		} 
-			strcat(plaintext, tempBuffer);	
-		}
-
-	//	int size = strlen(plaintext)-1;
-		plaintext[msgSize-1] = '\0';	
+//
+//		while (strstr(plaintext, "$") == NULL) {
+//			memset(tempBuffer, '\0', sizeof(tempBuffer));
+//			charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+//			if (charsRead < 0){
+//      			error("ERROR reading from socket");
+//    		} 
+//			strcat(plaintext, tempBuffer);	
+//		}
+//
+//	//	int size = strlen(plaintext)-1;
+//		plaintext[msgSize-1] = '\0';	
 	
-//    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-//    	//////////////////////////////////////////////////////////////////////////////////
-////    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
-//    	if (charsRead < 0){
-//      		error("ERROR reading from socket");
-//    	}  
-//		// put buffer into plaintext to use later
-//		strcat(plaintext, tempBuffer);
-//		
-//		plaintext[msgSize-1] = '\0';
+    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+    	//////////////////////////////////////////////////////////////////////////////////
+//    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
+    	if (charsRead < 0){
+      		error("ERROR reading from socket");
+    	}  
+		// put buffer into plaintext to use later
+		strcat(plaintext, tempBuffer);
+		
+		plaintext[msgSize-1] = '\0';
 		
 		
 		
@@ -250,17 +268,39 @@ int main(int argc, char *argv[]){
 		}
 
 	
-    	// send encrypted text to client
-    	charsRead = send(connectionSocket, ciphertext, strlen(ciphertext), 0);
-    	
-    	////////////////////////////////////////////////////////////////////////////////////
-    //	printf("SERVER: This is size of sending cipher %d\n", strlen(ciphertext));
-    	memset(ciphertext, '\0', MAXSIZE);
+	
+		int cipherLen;
 
-   		// error sending to socket
-		if (charsRead < 0){
-      		error("ERROR writing to socket");
-   		}
+    	char variable[] = "$";
+		strcat(ciphertext, variable);   
+    
+		// Send message to server
+    	cipherLen = strlen(ciphertext);
+		if (sendall(connectionSocket, ciphertext, &cipherLen) == -1) {
+		
+		////////////////////////////////////////////////////////////////////////////////////
+   		// printf("Client: This is size of msg being sent in sendall %d\n", len);
+		
+   		perror("sendall cipher");
+    	printf("We only sent %d bytes because of the error!\n", cipherLen);
+		} 
+  		memset(ciphertext, '\0', sizeof(ciphertext));
+  		
+  		
+  		  		
+//    	// send encrypted text to client
+//    	charsRead = send(connectionSocket, ciphertext, strlen(ciphertext), 0);
+//    	
+//    	////////////////////////////////////////////////////////////////////////////////////
+//    //	printf("SERVER: This is size of sending cipher %d\n", strlen(ciphertext));
+//    	memset(ciphertext, '\0', MAXSIZE);
+//
+//   		// error sending to socket
+//		if (charsRead < 0){
+//      		error("ERROR writing to socket");
+//   		}
+
+
 
  		// close connection in child process
    		close(connectionSocket);
