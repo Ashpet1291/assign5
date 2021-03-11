@@ -360,7 +360,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	//	int size = strlen(plaintext)-1;
-		tempBuffer[msgSize-1] = '\0';
+		tempBuffer[plainSize-1] = '\0';
     
     // Read data from the socket, leaving \0 at end
  //   charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
