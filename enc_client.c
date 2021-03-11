@@ -373,7 +373,7 @@ int main(int argc, char *argv[]) {
     	error("CLIENT: ERROR reading from socket");
     }
     // print encoded text
-    printf("%s\n", buffer);
+    printf("%s\n", tempBuffer);
     fflush(stdout);
 	
     // Close the socket
