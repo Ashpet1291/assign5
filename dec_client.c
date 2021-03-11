@@ -145,9 +145,9 @@ int main(int argc, char *argv[]) {
   
   // if decoding port tris to connect to port 1
   printf("this is dec client arg 0 %s\n", argv[0]);
-  printf("this is dec arg 1 %s\n", argv[1]);
-  printf("this is arg 2 %s\n", argv[2]);
-  printf("this is arg 3 %s\n", argv[3]);
+  printf("this is dec client arg 1 %s\n", argv[1]);
+  printf("this is dec cleint arg 2 %s\n", argv[2]);
+  printf("this is dec arg 3 %s\n", argv[3]);
 //  printf("this is arg 4 %s\n", argv[4]);
 
 
