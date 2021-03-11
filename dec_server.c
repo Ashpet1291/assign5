@@ -92,7 +92,6 @@ int main(int argc, char *argv[]){
       error("ERROR on accept");
     }
 
-
 	pid = fork();
 	
     switch (pid){
