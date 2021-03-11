@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
 	
 	printf("this is arg enc server port 0 %s\n", argv[0]);
     printf("this is arg 1 enc server port %s\n", argv[1]);
-    printf("this is arg 2 %s\n", argv[2]);
+    printf("this is arg 2 enc server %s\n", argv[2]);
     printf("this is enc server port arg 3 %s\n", argv[3]);
 	
   	// Check usage & args
