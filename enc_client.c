@@ -350,7 +350,7 @@ int main(int argc, char *argv[]) {
     
     
     
-    while (strstr(buffer, "$") == NULL) {
+    while (strstr(tempBuffer, "$") == NULL) {
 		memset(buffer, '\0', sizeof(buffer));
 		charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
 		if (charsRead < 0){
@@ -361,6 +361,7 @@ int main(int argc, char *argv[]) {
 
 	//	int size = strlen(plaintext)-1;
 		tempBuffer[plainSize-1] = '\0';
+			
     
     // Read data from the socket, leaving \0 at end
  //   charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
