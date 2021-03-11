@@ -350,7 +350,7 @@ int main(int argc, char *argv[]) {
     
     
     
-    while (strstr(plaintext, "$") == NULL) {
+    while (strstr(buffer, "$") == NULL) {
 		memset(buffer, '\0', sizeof(buffer));
 		charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
 		if (charsRead < 0){
