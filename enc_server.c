@@ -144,17 +144,17 @@ int main(int argc, char *argv[]){
 	
     	memset(buffer, '\0', MAXSIZE);
 		//receive test message and send response back
-          recv(connectionSocket, buffer, sizeof(buffer)-1);
+          recv(connectionSocket, buffer, sizeof(buffer)-1, 0);
           if (strcmp(buffer, "enc_client") != 0) {
                 //write error back to client
                 char response[]  = "error, this is enc_server";
-                send(newsockfd, response, sizeof(response));
+                send(newsockfd, response, sizeof(response), 0); 
                 exit(2);
           } 
           else {
                 //write confirmation back to client
                 char response[] = "enc_client";
-                send(newsockfd, response, sizeof(response));
+                send(newsockfd, response, sizeof(response), 0);
           }
 		
 		

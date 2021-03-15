@@ -186,8 +186,8 @@ int main(int argc, char *argv[]) {
   	// send message to test if enc client is connectde to enc server
     memset(buffer, '\0', MAXSIZE);
     char testString[]="enc_client";
-    send(socketFD, testString, sizeof(testString));
-    recv(socketFD, buffer, sizeof(buffer));
+    send(socketFD, testString, sizeof(testString), 0);
+    recv(socketFD, buffer, sizeof(buffer), 0);
     if (strcmp(buffer, "enc_client") != 0) {
         fprintf(stderr,"This is enc_client, error connecting on this port\n");
         exit(2);
