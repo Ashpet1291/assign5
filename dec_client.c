@@ -107,12 +107,12 @@ void checkChars(char tempList[]) {
 		if(charac != 32) {
 			if (charac < 65) {
 					fprintf(stderr,"error: input contains bad characters");
-					memset(tempList, '\0', sizeof(tempList));
+					memset(tempList, '\0', sizeof(MAXSIZE));
 					exit(1); 
 				}
 			if (charac > 90) {
 				fprintf(stderr,"error: input contains bad characters");
-				memset(tempList, '\0', sizeof(tempList));
+				memset(tempList, '\0', sizeof(MAXSIZE));
 				exit(1); 
 				}	
 		}
