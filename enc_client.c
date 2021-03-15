@@ -337,7 +337,7 @@ int main(int argc, char *argv[]) {
 
 		while (strstr(cipherText, "$") == NULL) {
 			memset(buffer, '\0', sizeof(buffer));
-			charsRead = recv(connectionSocket, buffer, MAXSIZE, 0); 
+			charsRead = recv(csocketFD, buffer, MAXSIZE, 0); 
 			if (charsRead < 0){
       			error("ERROR reading from socket");
     		} 
