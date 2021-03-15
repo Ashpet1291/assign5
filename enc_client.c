@@ -322,46 +322,46 @@ int main(int argc, char *argv[]) {
     }
 
  
-//    // receives encrypted text from server
-//    // Clear out the buffer again for reuse
-//    memset(buffer, '\0', sizeof(buffer));
-//    // Read data from the socket, leaving \0 at end
-//    charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
-//        
-//    
-//    ////////////////////////////////////////////////////////////////////////////////////
-//   // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
-//    
-//    if (charsRead < 0){
-//    	error("CLIENT: ERROR reading from socket");
-//    }
+    // receives encrypted text from server
+    // Clear out the buffer again for reuse
+    memset(buffer, '\0', sizeof(buffer));
+    // Read data from the socket, leaving \0 at end
+    charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
+        
+    
+    ////////////////////////////////////////////////////////////////////////////////////
+   // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
+    
+    if (charsRead < 0){
+    	error("CLIENT: ERROR reading from socket");
+    }
     
     
     
         
    
-    	memset(buffer, '\0', MAXSIZE);
-    	memset(cipherText, '\0', MAXSIZE);
-
-
-		while (strstr(cipherText, "$") == NULL) {
-			memset(buffer, '\0', sizeof(buffer));
-			charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
-			if (charsRead < 0){
-      			error("ERROR reading from socket");
-    		} 
-			strcat(cipherText, buffer);	
-		}
-
-	//	int size = strlen(plaintext)-1;
-		cipherText[plainSize-1] = '\0';
-      printf("%s\n", cipherText);
+//    	memset(buffer, '\0', MAXSIZE);
+//    	memset(cipherText, '\0', MAXSIZE);
+//
+//
+//		while (strstr(cipherText, "$") == NULL) {
+//			memset(buffer, '\0', sizeof(buffer));
+//			charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
+//			if (charsRead < 0){
+//      			error("ERROR reading from socket");
+//    		} 
+//			strcat(cipherText, buffer);	
+//		}
+//
+//	//	int size = strlen(plaintext)-1;
+//		cipherText[plainSize-1] = '\0';
+//      printf("%s\n", cipherText);
    
    
     
     
     // print encoded text
- //   printf("%s\n", buffer);
+    printf("%s\n", buffer);
     fflush(stdout);
 	
     // Close the socket
