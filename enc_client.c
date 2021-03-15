@@ -106,12 +106,12 @@ void checkChars(char tempList[]) {
 			
 		if(charac != 32) {
 			if (charac < 65) {
-					fprintf(stderr,"error: input contains bad characters");
+					fprintf(stderr,"error: input contains bad characters\n");
 					memset(tempList, '\0', sizeof(tempList));
 					exit(1); 
 				}
 			if (charac > 90) {
-				fprintf(stderr,"error: input contains bad characters");
+				fprintf(stderr,"error: input contains bad characters\n");
 				memset(tempList, '\0', sizeof(tempList));
 				exit(1); 
 				}	
@@ -181,6 +181,19 @@ int main(int argc, char *argv[]) {
     error("CLIENT: ERROR connecting");
     exit(2);
   }
+  
+  
+  	// send message to test if enc client is connectde to enc server
+    memset(buffer, '\0', MAXSIZE);
+    char testString[]="enc_client";
+    send(socketFD, testString, sizeof(testString));
+    recv(socketFD, buffer, sizeof(buffer));
+    if (strcmp(buffer, "enc_client") != 0) {
+        fprintf(stderr,"This is enc_client, error connecting on this port\n");
+        exit(2);
+    }
+  
+    // get message size from the client
   	// get file size of msg file
  	plainSize = getFileSize(argv[1]);
  	

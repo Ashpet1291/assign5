@@ -138,7 +138,27 @@ int main(int argc, char *argv[]){
 		}
 		// child process
 		case 0:
-		{     
+		{   
+		
+		
+	
+    	memset(buffer, '\0', MAXSIZE);
+		//receive test message and send response back
+          recv(connectionSocket, buffer, sizeof(buffer)-1);
+          if (strcmp(buffer, "enc_client") != 0) {
+                //write error back to client
+                char response[]  = "error, this is enc_server";
+                send(newsockfd, response, sizeof(response));
+                exit(2);
+          } 
+          else {
+                //write confirmation back to client
+                char response[] = "enc_client";
+                send(newsockfd, response, sizeof(response));
+          }
+		
+		
+		  
 		// get message size from the client
     	memset(buffer, '\0', MAXSIZE);
     	// Read the client's message from the socket, this should be the msg size
