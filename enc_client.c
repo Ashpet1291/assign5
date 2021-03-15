@@ -109,6 +109,7 @@ void checkChars(char tempList[]) {
 		}
 		else {
 			fprintf(stderr,"error: input contains bad characters\n");
+			 memset(tempList, '\0', sizeof(tempList));
 			break;
 			exit(1);
 		}	
