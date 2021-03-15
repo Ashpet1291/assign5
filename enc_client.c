@@ -210,7 +210,6 @@ int main(int argc, char *argv[]) {
    // printf("client: This is size of sending char txtfilesize %d\n", strlen(textFileSize));
     	
     	
-    	
   	if (charsWritten < 0){
     	error("CLIENT: ERROR writing to socket");
   	}

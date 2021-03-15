@@ -19,7 +19,7 @@
 #include <netinet/in.h>
 #include <fcntl.h>
 
-#define MAXSIZE 10000
+#define MAXSIZE 80000
 
 
 char plaintext[MAXSIZE];
