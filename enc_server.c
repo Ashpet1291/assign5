@@ -148,13 +148,13 @@ int main(int argc, char *argv[]){
           if (strcmp(buffer, "enc_client") != 0) {
                 //write error back to client
                 char response[]  = "error, this is enc_server";
-                send(newsockfd, response, sizeof(response), 0); 
+                send(connectionSocket, response, sizeof(response), 0); 
                 exit(2);
           } 
           else {
                 //write confirmation back to client
                 char response[] = "enc_client";
-                send(newsockfd, response, sizeof(response), 0);
+                send(connectionSocket, response, sizeof(response), 0);
           }
 		
 		
