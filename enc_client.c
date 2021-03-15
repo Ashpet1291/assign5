@@ -42,7 +42,7 @@ char textFileSize[MAXSIZE];
 char tempBuff[MAXSIZE];
 
 
-char cipherText[MaxSIZE];
+char cipherText[MAXSIZE];
 
 // Error function used for reporting issues
 void error(const char *msg) { 
