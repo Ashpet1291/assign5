@@ -39,8 +39,6 @@ long int plainSize = 0;
 char keySizeString[MAXSIZE]; 
 char textFileSize[MAXSIZE];
 
-char cipherText[MAXSIZE];
-
 char tempBuff[MAXSIZE];
 
 
@@ -208,7 +206,8 @@ int main(int argc, char *argv[]) {
     ////////////////////////////////////////////////////////////////////////////////////
    // printf("client: This is size of sending char txtfilesize %d\n", strlen(textFileSize));
     	
-   	
+    	
+    	
   	if (charsWritten < 0){
     	error("CLIENT: ERROR writing to socket");
   	}
@@ -312,33 +311,8 @@ int main(int argc, char *argv[]) {
     if (charsWritten < strlen(buffer)){
     	printf("CLIENT: WARNING: Not all data written to socket!\n");
     }
-    
-    
-    
-    
-    
-    
-    
 
-//   	memset(buffer, '\0', MAXSIZE);
-//    	memset(cipherText, '\0', MAXSIZE);
-//
-//
-//		while (strstr(cipherText, "$") == NULL) {
-//			memset(buffer, '\0', sizeof(buffer));
-//			charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
-//			if (charsRead < 0){
-//      			error("ERROR reading from socket");
-//    		} 
-//			strcat(cipherText, buffer);	
-//		}
-//
-//	//	int size = strlen(plaintext)-1;
-//		cipherText[plainSize-1] = '\0';
-//        printf("%s\n", cipherText);
-        
-        
-        
+ 
     // receives encrypted text from server
     // Clear out the buffer again for reuse
     memset(buffer, '\0', sizeof(buffer));
@@ -353,9 +327,6 @@ int main(int argc, char *argv[]) {
     }
     // print encoded text
     printf("%s\n", buffer);
-
-
-
     fflush(stdout);
 	
     // Close the socket

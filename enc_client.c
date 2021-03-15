@@ -42,8 +42,6 @@ char textFileSize[MAXSIZE];
 char tempBuff[MAXSIZE];
 
 
-char cipherText[MAXSIZE];
-
 // Error function used for reporting issues
 void error(const char *msg) { 
   perror(msg); 
@@ -210,6 +208,7 @@ int main(int argc, char *argv[]) {
    // printf("client: This is size of sending char txtfilesize %d\n", strlen(textFileSize));
     	
     	
+    	
   	if (charsWritten < 0){
     	error("CLIENT: ERROR writing to socket");
   	}
@@ -327,7 +326,6 @@ int main(int argc, char *argv[]) {
     memset(buffer, '\0', sizeof(buffer));
     // Read data from the socket, leaving \0 at end
     charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
-        
     
     ////////////////////////////////////////////////////////////////////////////////////
    // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
@@ -335,31 +333,6 @@ int main(int argc, char *argv[]) {
     if (charsRead < 0){
     	error("CLIENT: ERROR reading from socket");
     }
-    
-    
-    
-        
-   
-//    	memset(buffer, '\0', MAXSIZE);
-//    	memset(cipherText, '\0', MAXSIZE);
-//
-//
-//		while (strstr(cipherText, "$") == NULL) {
-//			memset(buffer, '\0', sizeof(buffer));
-//			charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
-//			if (charsRead < 0){
-//      			error("ERROR reading from socket");
-//    		} 
-//			strcat(cipherText, buffer);	
-//		}
-//
-//	//	int size = strlen(plaintext)-1;
-//		cipherText[plainSize-1] = '\0';
-//      printf("%s\n", cipherText);
-   
-   
-    
-    
     // print encoded text
     printf("%s\n", buffer);
     fflush(stdout);

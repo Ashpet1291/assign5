@@ -19,7 +19,7 @@
 #include <netinet/in.h>
 #include <fcntl.h>
 
-#define MAXSIZE 80000
+#define MAXSIZE 10000
 
 
 char plaintext[MAXSIZE];
@@ -160,29 +160,29 @@ int main(int argc, char *argv[]){
    		memset(tempBuffer, '\0', MAXSIZE);
     	memset(plaintext, '\0', MAXSIZE);
 
-
-		while (strstr(plaintext, "$") == NULL) {
-			memset(tempBuffer, '\0', sizeof(tempBuffer));
-			charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-			if (charsRead < 0){
-      			error("ERROR reading from socket");
-    		} 
-			strcat(plaintext, tempBuffer);	
-		}
-
-	//	int size = strlen(plaintext)-1;
-		plaintext[msgSize-1] = '\0';	
+//
+//		while (strstr(plaintext, "$") == NULL) {
+//			memset(tempBuffer, '\0', sizeof(tempBuffer));
+//			charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+//			if (charsRead < 0){
+//      			error("ERROR reading from socket");
+//    		} 
+//			strcat(plaintext, tempBuffer);	
+//		}
+//
+//	//	int size = strlen(plaintext)-1;
+//		plaintext[msgSize-1] = '\0';	
 	
-//    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-//    	//////////////////////////////////////////////////////////////////////////////////
-////    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
-//    	if (charsRead < 0){
-//      		error("ERROR reading from socket");
-//    	}  
-//		// put buffer into plaintext to use later
-//		strcat(plaintext, tempBuffer);
-//		
-//		plaintext[msgSize-1] = '\0';
+    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+    	//////////////////////////////////////////////////////////////////////////////////
+//    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
+    	if (charsRead < 0){
+      		error("ERROR reading from socket");
+    	}  
+		// put buffer into plaintext to use later
+		strcat(plaintext, tempBuffer);
+		
+		plaintext[msgSize-1] = '\0';
 		
 		
 		
@@ -269,36 +269,36 @@ int main(int argc, char *argv[]){
 
 	
 	
-//		int cipherLen;
-//
-//    	char variable[] = "$";
-//		strcat(ciphertext, variable);   
-//    
-//		// Send message to server
-//    	cipherLen = strlen(ciphertext);
-//		if (sendall(connectionSocket, ciphertext, &cipherLen) == -1) {
-//		
-//		////////////////////////////////////////////////////////////////////////////////////
-//   		// printf("Client: This is size of msg being sent in sendall %d\n", len);
-//		
-//   		perror("sendall cipher");
-//    	printf("We only sent %d bytes because of the error!\n", cipherLen);
-//		} 
-//  		memset(ciphertext, '\0', sizeof(ciphertext));
+		int cipherLen;
+
+    	char variable[] = "$";
+		strcat(ciphertext, variable);   
+    
+		// Send message to server
+    	cipherLen = strlen(ciphertext);
+		if (sendall(connectionSocket, ciphertext, &cipherLen) == -1) {
+		
+		////////////////////////////////////////////////////////////////////////////////////
+   		// printf("Client: This is size of msg being sent in sendall %d\n", len);
+		
+   		perror("sendall cipher");
+    	printf("We only sent %d bytes because of the error!\n", cipherLen);
+		} 
+  		memset(ciphertext, '\0', sizeof(ciphertext));
   		
   		
   		  		
-    	// send encrypted text to client
-    	charsRead = send(connectionSocket, ciphertext, strlen(ciphertext), 0);
-    	
-    	////////////////////////////////////////////////////////////////////////////////////
-    //	printf("SERVER: This is size of sending cipher %d\n", strlen(ciphertext));
-    	memset(ciphertext, '\0', MAXSIZE);
-
-   		// error sending to socket
-		if (charsRead < 0){
-      		error("ERROR writing to socket");
-   		}
+//    	// send encrypted text to client
+//    	charsRead = send(connectionSocket, ciphertext, strlen(ciphertext), 0);
+//    	
+//    	////////////////////////////////////////////////////////////////////////////////////
+//    //	printf("SERVER: This is size of sending cipher %d\n", strlen(ciphertext));
+//    	memset(ciphertext, '\0', MAXSIZE);
+//
+//   		// error sending to socket
+//		if (charsRead < 0){
+//      		error("ERROR writing to socket");
+//   		}
 
 
 
