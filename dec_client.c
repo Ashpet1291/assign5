@@ -335,7 +335,7 @@ int main(int argc, char *argv[]) {
 
 	//	int size = strlen(plaintext)-1;
 		cipherText[plainSize-1] = '\0';
-        printf("%s\n", ciphertext);
+        printf("%s\n", cipherText);
 //    // receives encrypted text from server
 //    // Clear out the buffer again for reuse
 //    memset(buffer, '\0', sizeof(buffer));
