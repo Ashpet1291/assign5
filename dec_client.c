@@ -39,7 +39,7 @@ long int plainSize = 0;
 char keySizeString[MAXSIZE]; 
 char textFileSize[MAXSIZE];
 
-char ciphertext[MAXSIZE];
+char cipherText[MAXSIZE];
 
 char tempBuff[MAXSIZE];
 
