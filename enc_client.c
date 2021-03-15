@@ -93,26 +93,29 @@ long int getFileSize(char fileName[]) {
 // checks for bad chars
 void checkChars(char tempList[]) {
 	
-	int i;	
-	char charac;
+	int i;
+	
+	int charac = 0;
 	
 	for(i=0; i<strlen(tempList)-2; i++) {
 		
-		charac = tempList[i];		
+		charac = tempList[i];
+		
 	//	printf("this is charac %d\n", charac);
 	//	printf("this is char char %s\n", tempList[i]);
-		if (charac == ' ') {
-		// fine because it's a space	
-		}	
-		else if((charac >= 'A') && (charac <= 'Z')) {
-			// fine because it's uppercase
+			
+		if(charac != 32) {
+			if (charac < 65) {
+					fprintf(stderr,"error: input contains bad characters");
+					memset(tempList, '\0', sizeof(tempList));
+					exit(1); 
+				}
+			if (charac > 90) {
+				fprintf(stderr,"error: input contains bad characters");
+				memset(tempList, '\0', sizeof(tempList));
+				exit(1); 
+				}	
 		}
-		else {
-			fprintf(stderr,"error: input contains bad characters\n");
-			memset(tempList, '\0', sizeof(MAXSIZE));
-			break;
-			exit(1);
-		}	
 	}
 }
 
