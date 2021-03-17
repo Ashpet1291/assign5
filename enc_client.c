@@ -185,8 +185,6 @@ int main(int argc, char *argv[]) {
   	// send message to test if enc client is connected to enc server
     memset(buffer, '\0', MAXSIZE);
     char testString[]="enc_client";
-    memset(testString, '\0', sizeof(testString));
-  
     
     charsWritten = send(socketFD, testString, sizeof(testString), 0);
     if (charsWritten < 0){
