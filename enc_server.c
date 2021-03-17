@@ -153,6 +153,7 @@ int main(int argc, char *argv[]){
               //write error back to client
               char response[]  = "error, this is enc_server cant connect";
               send(connectionSocket, response, sizeof(response), 0);
+               memset(response, '\0',  sizeof(response));
 //		      fprintf(stderr,"This is enc_server, error connecting on this port\n");
 //            exit(2);
           } 
@@ -160,9 +161,9 @@ int main(int argc, char *argv[]){
               //write confirmation back to client
               char response[] = "enc_client";
               send(connectionSocket, response, sizeof(response), 0);
+              memset(response, '\0',  sizeof(response));
           }
 		
-		 memset(response, '\0',  sizeof(response));
 		  
 		// get message size from the client
     	memset(buffer, '\0', MAXSIZE);
