@@ -155,7 +155,6 @@ int main(int argc, char *argv[]) {
   ///////////////////////////////////////////////////////////////////////////
   //printf("this is client %s\n", argv[3]); first port
   
-//  if(portNumber != )
   serverAddress.sin_port = htons(portNumber);
 
   // Get the DNS entry for this host name
@@ -186,8 +185,17 @@ int main(int argc, char *argv[]) {
   	// send message to test if enc client is connected to enc server
     memset(buffer, '\0', MAXSIZE);
     char testString[]="enc_client";
-    send(socketFD, testString, sizeof(testString), 0);
-    recv(socketFD, buffer, sizeof(buffer), 0);
+    
+    charsWritten = send(socketFD, testString, sizeof(testString), 0);
+    if (charsWritten < 0){
+    	error("CLIENT: ERROR writing to socket");
+  	}
+    
+    
+    charsRead = recv(socketFD, buffer, sizeof(buffer), 0);
+     if(charsRead < 0) {
+  		error("CLIENT: ERROR reading from socket");
+    }
     if (strcmp(buffer, "enc_client") != 0) {
         fprintf(stderr,"This is enc_client, error connecting on this port\n");
         exit(2);
