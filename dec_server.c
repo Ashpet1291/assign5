@@ -111,7 +111,7 @@ int main(int argc, char *argv[]){
           if (charsRead < 0){
       		error("ERROR reading from socket");
     	  }  
-          if (strstr(buffer, "dec_client") != 0) {
+          if (strcmp(buffer, "dec_client") != 0) {
           	        	
               //write error back to client
               char response[]  = "error, this is dec_server cant connect";
@@ -122,7 +122,7 @@ int main(int argc, char *argv[]){
           } 
           else {
               //write confirmation back to client
-              char response[] = "enc_client";
+              char response[] = "dec_client";
               send(connectionSocket, response, sizeof(response), 0);
               memset(response, '\0',  sizeof(response));
           }   

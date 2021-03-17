@@ -195,7 +195,7 @@ int main(int argc, char *argv[]) {
      if(charsRead < 0) {
   		error("CLIENT: ERROR reading from socket");
     }
-    if (strstr(buffer, "dec_client") != 0) {
+    if (strcmp(buffer, "dec_client") != 0) {
         fprintf(stderr,"This is decoding client, error connecting on this port\n");
         exit(2);
     }
