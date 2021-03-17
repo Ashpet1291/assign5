@@ -272,6 +272,12 @@ int main(int argc, char *argv[]) {
     
 
     int len;
+//	// Send message to server
+//    len = strlen(msg);
+
+    char variable[] = "$";
+	strcat(msg, variable);   
+    
 	// Send message to server
     len = strlen(msg);
 	if (sendall(socketFD, msg, &len) == -1) {

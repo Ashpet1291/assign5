@@ -148,15 +148,34 @@ int main(int argc, char *argv[]){
     // Get the message from the client and display it
     memset(tempBuffer, '\0', MAXSIZE);
     memset(plaintext, '\0', MAXSIZE);
-    // Read the client's message from the socket
-    charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-    if (charsRead < 0){
-      error("ERROR reading from socket");
-    }
-    // prints first message from client
-    //printf("SERVER: I received this from the client: \"%s\"\n", buffer);
+    
+    
+    
+    while (strstr(plaintext, "$") == NULL) {
+		memset(tempBuffer, '\0', sizeof(tempBuffer));
+		charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+		if (charsRead < 0){
+    		error("ERROR reading from socket");
+    	} 
+		strcat(plaintext, tempBuffer);	
+	}
+
+	//	int size = strlen(plaintext)-1;
+		plaintext[msgSize-1] = '\0';	
 	
-	strcat(plaintext, tempBuffer);
+    
+    
+    
+//    // Read the client's message from the socket
+//    charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+//    if (charsRead < 0){
+//      error("ERROR reading from socket");
+//    }
+//    // prints first message from client
+//    //printf("SERVER: I received this from the client: \"%s\"\n", buffer);
+//	
+//	strcat(plaintext, tempBuffer);
+	 
 	 
 //	printf("SERVER: I received this from the client: \"%s\"\n", plaintext);
 	
