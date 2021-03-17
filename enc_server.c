@@ -140,25 +140,29 @@ int main(int argc, char *argv[]){
 		case 0:
 		{   
 		
-		
+		//send(connectionSocket, ciphertext, strlen(ciphertext), 0);
 	
-    	memset(buffer, '\0', MAXSIZE);
-		//receive test message and send response back
-          recv(connectionSocket, buffer, sizeof(buffer)-1, 0);
+    	  memset(buffer, '\0', MAXSIZE);
+		  //receive test message and send response back
+          charsRead = recv(connectionSocket, buffer, sizeof(buffer)-1, 0);
+          if (charsRead < 0){
+      		error("ERROR reading from socket");
+    	  }  
           if (strcmp(buffer, "enc_client") != 0) {
-                //write error back to client
-                char response[]  = "error, this is enc_server cant connect";
-                send(connectionSocket, response, sizeof(response), 0);
-//				fprintf(stderr,"This is enc_server, error connecting on this port\n");
-//                exit(2);
+          	        	
+              //write error back to client
+              char response[]  = "error, this is enc_server cant connect";
+              send(connectionSocket, response, sizeof(response), 0);
+//		      fprintf(stderr,"This is enc_server, error connecting on this port\n");
+//            exit(2);
           } 
           else {
-                //write confirmation back to client
-                char response[] = "enc_client";
-                send(connectionSocket, response, sizeof(response), 0);
+              //write confirmation back to client
+              char response[] = "enc_client";
+              send(connectionSocket, response, sizeof(response), 0);
           }
 		
-		
+		 memset(response, '\0',  sizeof(response));
 		  
 		// get message size from the client
     	memset(buffer, '\0', MAXSIZE);
