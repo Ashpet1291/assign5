@@ -183,7 +183,7 @@ int main(int argc, char *argv[]) {
   }
   
   
-  	// send message to test if enc client is connectde to enc server
+  	// send message to test if enc client is connected to enc server
     memset(buffer, '\0', MAXSIZE);
     char testString[]="enc_client";
     send(socketFD, testString, sizeof(testString), 0);

@@ -147,10 +147,10 @@ int main(int argc, char *argv[]){
           recv(connectionSocket, buffer, sizeof(buffer)-1, 0);
           if (strcmp(buffer, "enc_client") != 0) {
                 //write error back to client
-                char response[]  = "error, this is enc_server can't connect'";
+                char response[]  = "error, this is enc_server cant connect";
                 send(connectionSocket, response, sizeof(response), 0);
-			//	fprintf(stderr,"This is enc_server, error connecting on this port\n");
-              //  exit(2);
+				fprintf(stderr,"This is enc_server, error connecting on this port\n");
+                exit(2);
           } 
           else {
                 //write confirmation back to client
