@@ -202,6 +202,8 @@ int main(int argc, char *argv[]) {
         fprintf(stderr,"This is enc_client, error connecting on this port\n");
         exit(2);
     }
+    
+    memset(buffer, '\0', MAXSIZE);
   
     // get message size from the client
   	// get file size of msg file
