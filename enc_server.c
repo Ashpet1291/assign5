@@ -149,8 +149,8 @@ int main(int argc, char *argv[]){
                 //write error back to client
                 char response[]  = "error, this is enc_server can't connect'";
                 send(connectionSocket, response, sizeof(response), 0);
-				fprintf(stderr,"This is enc_server, error connecting on this port\n");
-                exit(2);
+			//	fprintf(stderr,"This is enc_server, error connecting on this port\n");
+              //  exit(2);
           } 
           else {
                 //write confirmation back to client
