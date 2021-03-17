@@ -103,7 +103,29 @@ int main(int argc, char *argv[]){
 			}
 			// child process
 			case 0:
-			{     
+			{  
+			
+			 memset(buffer, '\0', MAXSIZE);
+		  //receive test message and send response back
+          charsRead = recv(connectionSocket, buffer, sizeof(buffer)-1, 0);
+          if (charsRead < 0){
+      		error("ERROR reading from socket");
+    	  }  
+          if (strstr(buffer, "dec_client") != 0) {
+          	        	
+              //write error back to client
+              char response[]  = "error, this is dec_server cant connect";
+              send(connectionSocket, response, sizeof(response), 0);
+               memset(response, '\0',  sizeof(response));
+//		      fprintf(stderr,"This is enc_server, error connecting on this port\n");
+//            exit(2);
+          } 
+          else {
+              //write confirmation back to client
+              char response[] = "enc_client";
+              send(connectionSocket, response, sizeof(response), 0);
+              memset(response, '\0',  sizeof(response));
+          }   
 
     memset(buffer, '\0', MAXSIZE);
     // Read the client's message from the socket, this should be the msg size

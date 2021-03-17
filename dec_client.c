@@ -178,6 +178,31 @@ int main(int argc, char *argv[]) {
     error("CLIENT: ERROR connecting");
     exit(2);
   }
+  
+  
+  
+  	// send message to test if enc client is connected to enc server
+    memset(buffer, '\0', MAXSIZE);
+    char testString[]="dec_client";
+    
+    charsWritten = send(socketFD, testString, sizeof(testString), 0);
+    if (charsWritten < 0){
+    	error("CLIENT: ERROR writing to socket");
+  	}
+    
+    
+    charsRead = recv(socketFD, buffer, sizeof(buffer), 0);
+     if(charsRead < 0) {
+  		error("CLIENT: ERROR reading from socket");
+    }
+    if (strstr(buffer, "dec_client") != 0) {
+        fprintf(stderr,"This is decoding client, error connecting on this port\n");
+        exit(2);
+    }
+    
+  
+  
+  
   	// get file size of msg file
  	plainSize = getFileSize(argv[1]);
  	
