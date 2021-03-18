@@ -315,7 +315,7 @@ int main(int argc, char *argv[]){
 		
 	 int len1;
 
-  //  char variable[] = "$";
+    char variable[] = "$";
 	strcat(decText, variable);   
     
 	// Send decryption
