@@ -182,7 +182,7 @@ int main(int argc, char *argv[]){
       		error("ERROR writing to socket");
 		}
 	
-	
+		printf("%d", msgSize);
  		// Get the message from the client
    		memset(tempBuffer, '\0', MAXSIZE);
     	memset(plaintext, '\0', MAXSIZE);
