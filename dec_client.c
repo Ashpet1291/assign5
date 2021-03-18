@@ -228,8 +228,7 @@ int main(int argc, char *argv[]) {
 //	// check key file for bad characters
 //    checkChars(argv[2]);
 	
-		// Send message size to server
- 	// Write to the server
+	// Send message size to server
     charsWritten = send(socketFD, textFileSize, strlen(textFileSize), 0); 
     ////////////////////////////////////////////////////////////////////////////////////
    // printf("client: This is size of sending char txtfilesize %d\n", strlen(textFileSize));
@@ -363,29 +362,22 @@ int main(int argc, char *argv[]) {
  // Get the message from the client and display it
  
 	char tempString[MAXSIZE];
- 
- 
+  
     memset(buffer, '\0', MAXSIZE);
     memset(tempString, '\0', MAXSIZE);
-    
-    
-    
+     
     while (strstr(tempString, "$") == NULL) {
 		memset(buffer, '\0', sizeof(buffer));
-		charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
+		charsRead = recv(socketFD, buffer, CHUNK, 0); 
 		if (charsRead < 0){
     		error("ERROR reading from socket");
     	} 
 		strcat(tempString, buffer);	
 	}
-
 	//	int size = strlen(plaintext)-1;
 		tempString[plainSize-1] = '\0';	
     
-    
-    
-    
-    
+
     // print encoded text
     printf("%s\n", tempString);
     fflush(stdout);

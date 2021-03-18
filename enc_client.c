@@ -348,18 +348,37 @@ int main(int argc, char *argv[]) {
     }
 
  
-    // receives encrypted text from server
-    // Clear out the buffer again for reuse
-    memset(buffer, '\0', sizeof(buffer));
-    // Read data from the socket, leaving \0 at end
-    charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
-    
-    ////////////////////////////////////////////////////////////////////////////////////
-   // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
-    
-    if (charsRead < 0){
-    	error("CLIENT: ERROR reading from socket 4");
-    }
+//    // receives encrypted text from server
+//    // Clear out the buffer again for reuse
+//    memset(buffer, '\0', sizeof(buffer));
+//    // Read data from the socket, leaving \0 at end
+//    charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
+//    
+//    ////////////////////////////////////////////////////////////////////////////////////
+//   // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
+//    
+//    if (charsRead < 0){
+//    	error("CLIENT: ERROR reading from socket 4");
+//    }
+
+
+	char tempString[MAXSIZE];
+  
+    memset(buffer, '\0', MAXSIZE);
+    memset(tempString, '\0', MAXSIZE);
+     
+    while (strstr(tempString, "$") == NULL) {
+		memset(buffer, '\0', sizeof(buffer));
+		charsRead = recv(socketFD, buffer, CHUNK, 0); 
+		if (charsRead < 0){
+    		error("ERROR reading from socket");
+    	} 
+		strcat(tempString, buffer);	
+	}
+	//	int size = strlen(plaintext)-1;
+		tempString[plainSize-1] = '\0';	
+
+
     // print encoded text
     printf("%s\n", buffer);
     fflush(stdout);

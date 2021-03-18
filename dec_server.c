@@ -172,7 +172,7 @@ int main(int argc, char *argv[]){
     memset(plaintext, '\0', MAXSIZE);
     
     
-    
+    // reciev all
     while (strstr(plaintext, "$") == NULL) {
 		memset(tempBuffer, '\0', sizeof(tempBuffer));
 		charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
