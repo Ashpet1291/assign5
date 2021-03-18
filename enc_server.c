@@ -19,7 +19,7 @@
 #include <netinet/in.h>
 #include <fcntl.h>
 
-#define MAXSIZE 10000
+#define MAXSIZE 80000
 #define CHUNK 1024
 
 
@@ -182,7 +182,7 @@ int main(int argc, char *argv[]){
       		error("ERROR writing to socket");
 		}
 	
-		printf("%d", msgSize);
+//		printf("%d", msgSize);
  		// Get the message from the client
    		memset(tempBuffer, '\0', MAXSIZE);
     	memset(plaintext, '\0', MAXSIZE);
@@ -200,7 +200,7 @@ int main(int argc, char *argv[]){
 	//	int size = strlen(plaintext)-1;
 		plaintext[msgSize-1] = '\0';
 		
-		printf("%s\n", plaintext);	
+//		printf("%s\n", plaintext);	
 	
 //    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
 //    	//////////////////////////////////////////////////////////////////////////////////

@@ -227,7 +227,7 @@ int main(int argc, char *argv[]) {
 		// Send message size to server
  	// Write to the server
     charsWritten = send(socketFD, textFileSize, strlen(textFileSize), 0); 
-    printf("%s", textFileSize);
+   // printf("%s", textFileSize);
     ////////////////////////////////////////////////////////////////////////////////////
    // printf("client: This is size of sending char txtfilesize %d\n", strlen(textFileSize));
     	
