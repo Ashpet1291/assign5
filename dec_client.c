@@ -14,6 +14,7 @@
 #include <netdb.h>      // gethostbyname()
 
 #define MAXSIZE 80000
+#define CHUNK 1024
 
 
 

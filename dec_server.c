@@ -41,7 +41,7 @@ int main(int argc, char *argv[]){
   
   char decText[MAXSIZE]; 
   char tempDecr[MAXSIZE];
-	char tempBuffer[MAXSIZE];
+	char tempBuffer[1000];
 
 	int keySize;
 	int msgSize;
