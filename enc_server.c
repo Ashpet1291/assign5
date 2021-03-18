@@ -51,7 +51,7 @@ int sendall(int s, char *buf, int *len)
     }
 
     *len = total; // return number actually sent here
-	printf("this is encoding server sneding all");
+	printf("this is encoding server sending all");
     return n==-1?-1:0; // return -1 on failure, 0 on success
 } 
  
@@ -198,7 +198,9 @@ int main(int argc, char *argv[]){
 		}
 
 	//	int size = strlen(plaintext)-1;
-		plaintext[msgSize-1] = '\0';	
+		plaintext[msgSize-1] = '\0';
+		
+		printf("%s\n", plaintext);	
 	
 //    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
 //    	//////////////////////////////////////////////////////////////////////////////////
@@ -217,6 +219,7 @@ int main(int argc, char *argv[]){
 		// sends success message 2 to client- msg received
 	 	charsRead = send(connectionSocket, 
                     "I am the server, and I got your message", 39, 0); 
+                    printf("I am sending the message");
      	if (charsRead < 0){
       		error("ERROR writing to socket");
    		}
