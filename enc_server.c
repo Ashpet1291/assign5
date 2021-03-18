@@ -20,6 +20,7 @@
 #include <fcntl.h>
 
 #define MAXSIZE 10000
+#define CHUNK 1024
 
 
 char plaintext[MAXSIZE];
@@ -189,7 +190,7 @@ int main(int argc, char *argv[]){
 
 		while (strstr(plaintext, "$") == NULL) {
 			memset(tempBuffer, '\0', sizeof(tempBuffer));
-			charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+			charsRead = recv(connectionSocket, tempBuffer, CHUNK, 0); 
 			if (charsRead < 0){
       			error("ERROR reading from socket");
     		} 

@@ -19,6 +19,7 @@
 #include <netinet/in.h>
 
 #define MAXSIZE 80000
+#define CHUNK 1024
 
 // Error function used for reporting issues
 void error(const char *msg) {
@@ -175,7 +176,7 @@ int main(int argc, char *argv[]){
     // reciev all
     while (strstr(plaintext, "$") == NULL) {
 		memset(tempBuffer, '\0', sizeof(tempBuffer));
-		charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
+		charsRead = recv(connectionSocket, tempBuffer, CHUNK, 0); 
 		if (charsRead < 0){
     		error("ERROR reading from socket");
     	} 
