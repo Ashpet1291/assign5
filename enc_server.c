@@ -24,7 +24,7 @@
 
 
 char plaintext[MAXSIZE];
-char tempBuffer[1000];
+char tempBuffer[MAXSIZE];
 
 	
 
