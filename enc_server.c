@@ -51,7 +51,7 @@ int sendall(int s, char *buf, int *len)
     }
 
     *len = total; // return number actually sent here
-
+	printf("this is encoding server sneding all");
     return n==-1?-1:0; // return -1 on failure, 0 on success
 } 
  
