@@ -377,8 +377,8 @@ int main(int argc, char *argv[]) {
 		strcat(tempString, buffer);	
 	}
 	//	int size = strlen(plaintext)-1;
-		tempString[plainSize-1] = '\0';	
-
+	tempString[strlen(tempString)-1] = '\0';	
+//	tempString[plainSize-2] = '\0';	
 
     // print encoded text
     printf("%s\n", buffer);
