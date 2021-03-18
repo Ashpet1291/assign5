@@ -380,7 +380,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	//	int size = strlen(plaintext)-1;
-		tempString[msgSize-1] = '\0';	
+		tempString[plainSize-1] = '\0';	
     
     
     
