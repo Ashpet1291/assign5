@@ -247,7 +247,7 @@ int main(int argc, char *argv[]) {
     memset(buffer, '\0', sizeof(buffer));
     charsRead = recv(socketFD, buffer, MAXSIZE, 0);
     if(charsRead < 0) {
-  		error("CLIENT: ERROR reading from socket");
+  		error("CLIENT: ERROR reading from socket 1");
     }
     
     //send plain text to server
@@ -297,7 +297,7 @@ int main(int argc, char *argv[]) {
 	memset(buffer, '\0', sizeof(buffer));
     charsRead = recv(socketFD, buffer, MAXSIZE, 0);
     if(charsRead < 0) {
-  		error("CLIENT: ERROR reading from socket");
+  		error("CLIENT: ERROR reading from socket 2");
     }
     
 	// open key file
@@ -330,7 +330,7 @@ int main(int argc, char *argv[]) {
     memset(tempBuff, '\0', sizeof(tempBuff));
     charsRead = recv(socketFD, tempBuff, MAXSIZE, 0);
     if(charsRead < 0) {
-  		error("CLIENT: ERROR reading from socket");
+  		error("CLIENT: ERROR reading from socket 3");
     }
   
   
@@ -358,7 +358,7 @@ int main(int argc, char *argv[]) {
    // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
     
     if (charsRead < 0){
-    	error("CLIENT: ERROR reading from socket");
+    	error("CLIENT: ERROR reading from socket 4");
     }
     // print encoded text
     printf("%s\n", buffer);
