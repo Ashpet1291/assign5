@@ -191,7 +191,7 @@ int main(int argc, char *argv[]) {
     	error("CLIENT: ERROR writing to socket");
   	}
     
-    
+    // recieve response from server about test
     charsRead = recv(socketFD, buffer, sizeof(buffer), 0);
      if(charsRead < 0) {
   		error("CLIENT: ERROR reading from socket");

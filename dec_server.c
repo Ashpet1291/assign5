@@ -24,7 +24,29 @@
 void error(const char *msg) {
   perror(msg);
   exit(1);
+}
+
+
+// makes sure all information is sent
+// this code is from Beejs guide
+int sendall(int s, char *buf, int *len)
+{
+    int total = 0;        // how many bytes we've sent
+    int bytesleft = *len; // how many we have left to send
+    int n;
+
+    while(total < *len) {
+        n = send(s, buf+total, bytesleft, 0);
+        if (n == -1) { break; }
+        total += n;
+        bytesleft -= n;
+    }
+
+    *len = total; // return number actually sent here
+
+    return n==-1?-1:0; // return -1 on failure, 0 on success
 } 
+ 
 
 int main(int argc, char *argv[]){
   int connectionSocket, newConnectionSocket, charsRead, portNumber;
@@ -197,7 +219,7 @@ int main(int argc, char *argv[]){
 //    }
 //    
     
-     // Get the key from the client
+     // Get the key size from the client
     memset(buffer, '\0', MAXSIZE);
     // Read the client's message from the socket
     charsRead = recv(connectionSocket, buffer, MAXSIZE, 0); 
@@ -210,7 +232,7 @@ int main(int argc, char *argv[]){
 //	strcat(key, buffer);
 	keySize = atoi(buffer);
 //	printf("SERVER: I received this from the client: \"%d\"\n", keySize);
-    // Send a Success message back to the client
+    // Send a Success message 3 back to the client
     charsRead = send(connectionSocket, 
                     "I am the server, and I got your message", 39, 0); 
     if (charsRead < 0){
@@ -290,17 +312,35 @@ int main(int argc, char *argv[]){
 				decText[i] = 'A' + (char)result;
 			}
 		}
-	
-    // send decryption    
-    charsRead = send(connectionSocket, decText, strlen(decText), 0);
+		
+	 int len1;
+
+  //  char variable[] = "$";
+	strcat(decText, variable);   
     
-    
-    memset(decText, '\0', MAXSIZE);
+	// Send decryption
+    len1 = strlen(decText);
+	if (sendall(connectionSocket, decText, &len1) == -1) {
+		
+	////////////////////////////////////////////////////////////////////////////////////
+   // printf("Client: This is size of msg being sent in sendall %d\n", len);
+		
+    perror("sendall error writing to socket");
+    printf("We only sent %d bytes because of the error!\n", len1);
+	} 
+  	memset(decText, '\0', sizeof(decText));
   
-//                    "I am the server, and I got your message", 39, 0); 
-    if (charsRead < 0){
-      error("ERROR writing to socket");
-    }
+	
+//    // send decryption    
+//    charsRead = send(connectionSocket, decText, strlen(decText), 0);
+//    
+//    
+//    memset(decText, '\0', MAXSIZE);
+//  
+////                    "I am the server, and I got your message", 39, 0); 
+//    if (charsRead < 0){
+//      error("ERROR writing to socket");
+//    }
   	}
   	
   	default:
