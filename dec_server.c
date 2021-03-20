@@ -63,14 +63,8 @@ int main(int argc, char *argv[]){
 	
 	int status;
 	pid_t pid;
-	
-	
-			
-	int i;
-	int plaintextInt;
-    int keyInt;
-	int result;
-	
+
+
   // Check usage & args
   if (argc < 2) { 
     fprintf(stderr,"USAGE: %s port\n", argv[0]); 
@@ -235,6 +229,10 @@ int main(int argc, char *argv[]){
 	}
     
      char decText[MAXSIZE];
+     int i;
+     int plaintextInt;
+     int keyInt;
+	int result;
 	 // decrypt plaintext
 	 //  converts chars in plaintext to ints 0-26, all uppercase letters and space char
 	  for (i=0; i < msgSize-1; i++){

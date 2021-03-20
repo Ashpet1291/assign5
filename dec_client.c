@@ -29,19 +29,6 @@
 // if enc_client cannot connect to the enc_server server, for any reason (including that it has accidentally tried to connect to the dec_server server), 
 // it should report this error to stderr with the attempted port, and set the exit value to 2.
 
-static const char array[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' '};
-FILE* plaintextFile;
-FILE* keyFile;
-char key[MAXSIZE]; 
-char textFile[MAXSIZE];
-char msg[MAXSIZE];
-long int keySize = 0; 
-long int plainSize = 0;
-char keySizeString[MAXSIZE]; 
-char textFileSize[MAXSIZE];
-
-char tempBuff[MAXSIZE];
-
 
 // Error function used for reporting issues
 void error(const char *msg) { 
@@ -101,9 +88,6 @@ void checkChars(char tempList[]) {
 	for(i=0; i<strlen(tempList)-2; i++) {
 		
 		charac = tempList[i];
-		
-	//	printf("this is charac %d\n", charac);
-	//	printf("this is char char %s\n", tempList[i]);
 			
 		if(charac != 32) {
 			if (charac < 65) {
@@ -191,13 +175,17 @@ int main(int argc, char *argv[]) {
         exit(2);
     }
 
-  
+    long int plainSize = 0;
+    char textFileSize[MAXSIZE];
   	// get file size of msg file
  	plainSize = getFileSize(argv[1]);
  	
  	//put int in char
  	sprintf(textFileSize, "%d", plainSize); 
  	
+ 	
+ 	long int keySize = 0; 
+ 	char keySizeString[MAXSIZE];
 	// get file size of key	file
 	keySize = getFileSize(argv[2]);
 	
@@ -222,6 +210,7 @@ int main(int argc, char *argv[]) {
     	printf("CLIENT: WARNING: Not all data written to socket!\n");
   	}
   
+    FILE* plaintextFile;
     // recieve success msg 1
     memset(buffer, '\0', sizeof(buffer));
     charsRead = recv(socketFD, buffer, MAXSIZE, 0);
@@ -238,6 +227,7 @@ int main(int argc, char *argv[]) {
         exit(1); 
     } 
    
+    char msg[MAXSIZE];
     memset(msg, '\0', sizeof(msg));
     // Get input from the user, trunc to buffer - 1 chars, leaving \0
     fgets(msg, sizeof(msg) - 1, plaintextFile);
@@ -264,7 +254,7 @@ int main(int argc, char *argv[]) {
 	} 
   	memset(msg, '\0', sizeof(msg));
   
-  
+    FILE* keyFile;
     // receive success 2
 	memset(buffer, '\0', sizeof(buffer));
     charsRead = recv(socketFD, buffer, MAXSIZE, 0);
@@ -298,6 +288,7 @@ int main(int argc, char *argv[]) {
     	printf("CLIENT: WARNING: Not all data written to socket!\n");
   	}
 
+    char tempBuff[MAXSIZE];
 	// recieve success 3  
     memset(tempBuff, '\0', sizeof(tempBuff));
     charsRead = recv(socketFD, tempBuff, MAXSIZE, 0);
