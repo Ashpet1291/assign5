@@ -26,9 +26,6 @@
 */
 
 
-// if enc_client cannot connect to the enc_server server, for any reason (including that it has accidentally tried to connect to the dec_server server), 
-// it should report this error to stderr with the attempted port, and set the exit value to 2.
-
 static const char array[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' '};
 FILE* plaintextFile;
 FILE* keyFile;
@@ -118,91 +115,82 @@ void checkChars(char tempList[]) {
 
 
 int main(int argc, char *argv[]) {
-  int socketFD, portNumber, charsWritten, charsRead; 
-  struct sockaddr_in serverAddress;
-  struct hostent* hostInfo;
-  char buffer[MAXSIZE];
+	int socketFD, portNumber, charsWritten, charsRead; 
+    struct sockaddr_in serverAddress;
+    struct hostent* hostInfo;
+    char buffer[MAXSIZE];
 
-  // Check usage & args
-  if (argc < 3) { 
-    fprintf(stderr,"USAGE: %s hostname port\n", argv[0]); 
-    exit(0); 
-  } 
+    // Check usage & args
+    if (argc < 3) { 
+    	fprintf(stderr,"USAGE: %s hostname port\n", argv[0]); 
+    	exit(0); 
+    } 
 
-  // Create a socket
-  socketFD = socket(AF_INET, SOCK_STREAM, 0); 
-  if (socketFD < 0){
-    error("CLIENT: ERROR opening socket");
-  }
+    // Create a socket
+    socketFD = socket(AF_INET, SOCK_STREAM, 0); 
+    if (socketFD < 0){
+    	error("CLIENT: ERROR opening socket");
+    }
 
 	// Clear out the address struct
-  memset((char*)&serverAddress, '\0', sizeof(serverAddress)); 
-  // The address should be network capable
-  serverAddress.sin_family = AF_INET;
-  // Store the port number
-  portNumber = atoi(argv[3]);
-  
-  
-  ///////////////////////////////////////////////////////////////////////////
-  //printf("this is client %s\n", argv[3]); first port
-  
-  serverAddress.sin_port = htons(portNumber);
+    memset((char*)&serverAddress, '\0', sizeof(serverAddress)); 
+    // The address should be network capable
+    serverAddress.sin_family = AF_INET;
+    // Store the port number
+    portNumber = atoi(argv[3]);
+    serverAddress.sin_port = htons(portNumber);
 
-  // Get the DNS entry for this host name
-  hostInfo = gethostbyname("localhost"); 
-  if (hostInfo == NULL) { 
-    fprintf(stderr, "CLIENT: ERROR, no such host\n"); 
-    exit(0); 
-  }
-  // Copy the first IP address from the DNS entry to sin_addr.s_addr
-  memcpy((char*) &serverAddress.sin_addr.s_addr, 
+    // Get the DNS entry for this host name
+    hostInfo = gethostbyname("localhost"); 
+    if (hostInfo == NULL) { 
+    	fprintf(stderr, "CLIENT: ERROR, no such host\n"); 
+    	exit(0); 
+    }
+    // Copy the first IP address from the DNS entry to sin_addr.s_addr
+    memcpy((char*) &serverAddress.sin_addr.s_addr, 
         hostInfo->h_addr_list[0],
         hostInfo->h_length);
 	
 	
-	 //if enc_client cannot connect to the enc_server server, 
-	 //for any reason (including that it has accidentally tried to connect to the dec_server server)
-	// it should report this error to stderr with the attempted port, 
-	 //and set the exit value to 2. Otherwise, upon successfully running and terminating, enc_client should set the exit value to 0.
-	
-	
-  // Connect to server
-  if (connect(socketFD, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) < 0){
-    error("CLIENT: ERROR connecting");
-    exit(2);
-  }
+    // Connect to server
+    if (connect(socketFD, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) < 0){
+    	error("CLIENT: ERROR connecting");
+    	exit(2);
+    }
   
   
-  	// send message to test if enc client is connected to enc server
     memset(buffer, '\0', MAXSIZE);
-    char testString[]="enc_client";
+    char testString[]="this is enc_client";
     
+    // send message to check if enc_client is connected to enc_server
     charsWritten = send(socketFD, testString, sizeof(testString), 0);
     if (charsWritten < 0){
     	error("CLIENT: ERROR writing to socket");
   	}
     
-    // recieve response from server about test
+    // get response from server if connected to the right server
     charsRead = recv(socketFD, buffer, sizeof(buffer), 0);
      if(charsRead < 0) {
   		error("CLIENT: ERROR reading from socket");
     }
-    if (strstr(buffer, "enc_client") != 0) {
+    
+    // check if the test string is in the recieved message
+    if (strstr(buffer, testString) != 0) {
         fprintf(stderr,"This is encoding client, error connecting on this port\n");
         exit(2);
     }
     
-    memset(buffer, '\0', MAXSIZE);
+//    memset(buffer, '\0', MAXSIZE);
   
-    // get message size from the client
-  	// get file size of msg file
+  	// get file size of msg file from client
  	plainSize = getFileSize(argv[1]);
- 	
+	 	
  	//put int in char
  	sprintf(textFileSize, "%d", plainSize); 
  	
+
 	// get file size of key	file
-	keySize = getFileSize(argv[2]);
+	keySize = getFileSize(argv[2]);	
 	
 	//put int in char to send	
 	sprintf(keySizeString, "%d", keySize);
@@ -219,15 +207,9 @@ int main(int argc, char *argv[]) {
 	// check key file for bad characters
    // checkChars(argv[2]);
 	
-		// Send message size to server
- 	// Write to the server
+	// Write message size to server
     charsWritten = send(socketFD, textFileSize, strlen(textFileSize), 0); 
-   // printf("%s", textFileSize);
-    ////////////////////////////////////////////////////////////////////////////////////
-   // printf("client: This is size of sending char txtfilesize %d\n", strlen(textFileSize));
-    	
-    	
-    	
+       	
   	if (charsWritten < 0){
     	error("CLIENT: ERROR writing to socket");
   	}
@@ -239,7 +221,7 @@ int main(int argc, char *argv[]) {
     memset(buffer, '\0', sizeof(buffer));
     charsRead = recv(socketFD, buffer, MAXSIZE, 0);
     if(charsRead < 0) {
-  		error("CLIENT: ERROR reading from socket 1");
+  		error("CLIENT: ERROR reading from socket on success");
     }
     
     //send plain text to server
@@ -252,23 +234,21 @@ int main(int argc, char *argv[]) {
     } 
    
     memset(msg, '\0', sizeof(msg));
+    
     // Get input from the user, trunc to buffer - 1 chars, leaving \0
     fgets(msg, sizeof(msg) - 1, plaintextFile);
     // Remove the trailing \n that fgets adds
-     
-    ////////////////////////////////////////////////////////////////////////////////////
-   // printf("Client: This is size of msg being sent after fgets %d\n", strlen(msg));
     
     msg[strcspn(msg, "\n")] = '\0'; 
-
+	// close the file
     fclose(plaintextFile); 
 
 
 	// check plaintextFile file for bad characters
     checkChars(msg);    
 
-    int len;
 
+    int len;
     char variable[] = "$";
 	strcat(msg, variable);   
     
@@ -276,8 +256,6 @@ int main(int argc, char *argv[]) {
     len = strlen(msg);
 	if (sendall(socketFD, msg, &len) == -1) {
 		
-	////////////////////////////////////////////////////////////////////////////////////
-   // printf("Client: This is size of msg being sent in sendall %d\n", len);
 		
     perror("sendall");
     printf("We only sent %d bytes because of the error!\n", len);
@@ -328,10 +306,7 @@ int main(int argc, char *argv[]) {
   
     // send key string to server
     charsWritten = send(socketFD, buffer, strlen(buffer), 0); 
-    
-    ////////////////////////////////////////////////////////////////////////////////////
-   // printf("CLIENT: This is size of sending key %d\n", strlen(buffer));
-    	
+	    	
     if (charsWritten < 0){
     	error("CLIENT: ERROR writing to socket");
     }

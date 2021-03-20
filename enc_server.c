@@ -149,7 +149,7 @@ int main(int argc, char *argv[]){
           if (charsRead < 0){
       		error("ERROR reading from socket");
     	  }  
-          if (strstr(buffer, "enc_client") != 0) {
+          if (strstr(buffer, "this is enc_client") != 0) {
           	        	
               //write error back to client
               char response[]  = "error, this is enc_server cant connect";
