@@ -35,8 +35,8 @@ char tempBuff[MAXSIZE];
 
 
 // Error function used for reporting issues
-void error(const char *msg) { 
-  perror(msg); 
+void error(const char *message) { 
+  perror(message); 
   exit(0); 
 } 
 
