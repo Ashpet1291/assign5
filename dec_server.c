@@ -5,6 +5,9 @@
 // to get file size
 // https://stackoverflow.com/questions/238603/how-can-i-get-a-files-size-in-c
 
+// used for reference
+// https://www.quora.com/How-do-I-convert-character-value-to-integer-value-in-c-language
+
 // to run with grading script ./p5testscript RANDOM_PORT1 RANDOM_PORT2 > mytestresults 2>&1
 
 
@@ -73,6 +76,14 @@ int main(int argc, char *argv[]){
 	int status;
 	pid_t pid;
 	
+	
+			
+	int i;
+	char n;
+	int plaintextInt;
+    int keyInt;
+	int result;
+	
   // Check usage & args
   if (argc < 2) { 
     fprintf(stderr,"USAGE: %s port\n", argv[0]); 
@@ -137,7 +148,7 @@ int main(int argc, char *argv[]){
           if (strcmp(buffer, "dec_client") != 0) {
           	        	
               //write error back to client
-              char response[]  = "error, this is dec_server cant connect";
+              char response[]  = "error, this is dec_server cant connect to that client";
               send(connectionSocket, response, sizeof(response), 0);
                memset(response, '\0',  sizeof(response));
 //		      fprintf(stderr,"This is enc_server, error connecting on this port\n");
@@ -173,7 +184,7 @@ int main(int argc, char *argv[]){
     memset(plaintext, '\0', MAXSIZE);
     
     
-    // reciev all
+    // recieve all
     while (strstr(plaintext, "$") == NULL) {
 		memset(tempBuffer, '\0', sizeof(tempBuffer));
 		charsRead = recv(connectionSocket, tempBuffer, CHUNK, 0); 
@@ -269,18 +280,6 @@ int main(int argc, char *argv[]){
 	}
     
 
-	
-	
-	  int i;
-	  char n;
-	  int plaintextInt;
-      int keyInt;
-	  int result;
-
-
-	// used for reference
-	// https://www.quora.com/How-do-I-convert-character-value-to-integer-value-in-c-language
-
 	 // decrypt plaintext
 	 //  converts chars in plaintext to ints 0-26, all uppercase letters and space char
 	  for (i=0; i < msgSize-1; i++){
@@ -298,6 +297,7 @@ int main(int argc, char *argv[]){
 				keyInt = 26;
 			}
 			else{
+				// otherwise take char A-ASCII 65 from char in file to get num 0-26
 				keyInt = key[i] - 'A';
 			}
 			// encrypt plaintext- subtract key from plaintext and add 27, then mod 27 to encrypt

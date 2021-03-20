@@ -2,16 +2,16 @@
 // By Ashley Pettibone
 
 // sources and inspirations
-
+// most of the send and recv code along with connecting to sockets is frmo the examples in class
 
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>  // ssize_t
+#include <sys/types.h>  
 #include <unistd.h>
-#include <sys/socket.h> // send(),recv()
-#include <netdb.h>      // gethostbyname()
+#include <sys/socket.h> 
+#include <netdb.h>      
 
 #define MAXSIZE 80000
 #define CHUNK 1024
@@ -50,7 +50,7 @@ void error(const char *msg) {
 } 
 
 // makes sure all information is sent
-// this code is from Beejs guide
+// this code is from Beejs guide given as a reference form the assignment
 int sendall(int s, char *buf, int *len)
 {
     int total = 0;        // how many bytes we've sent
@@ -94,16 +94,12 @@ long int getFileSize(char fileName[]) {
 // checks for bad chars
 void checkChars(char tempList[]) {
 	
-	int i;
-	
+	int i;	
 	int charac = 0;
 	
 	for(i=0; i<strlen(tempList)-2; i++) {
 		
 		charac = tempList[i];
-		
-	//	printf("this is charac %d\n", charac);
-	//	printf("this is char char %s\n", tempList[i]);
 			
 		if(charac != 32) {
 			if (charac < 65) {
@@ -127,7 +123,6 @@ int main(int argc, char *argv[]) {
   struct hostent* hostInfo;
   char buffer[MAXSIZE];
 
-  
   // Check usage & args
   if (argc < 3) { 
     fprintf(stderr,"USAGE: %s hostname port\n", argv[0]); 

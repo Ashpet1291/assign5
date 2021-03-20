@@ -248,23 +248,12 @@ int main(int argc, char *argv[]){
     	// Read the key from the socket
     	charsRead = recv(connectionSocket, buffer, MAXSIZE, 0); 
     	
-    	
-    	////////////////////////////////////////////////////////////////////////////////////
-    //	printf("SERVER: This is size of recieving key %d\n", strlen(buffer));
-    	
     	if (charsRead < 0){
       		error("ERROR reading from socket");
     	}
 		// add the message from client in key	
 		strcat(key, buffer);
     
-     
-		////////////////////////////////////////////////////////////////////////////////////
-    //	printf("SERVER: This is size of plaintext before encryption %d\n", strlen(plaintext));
-    // used for reference
-	// https://www.quora.com/How-do-I-convert-character-value-to-integer-value-in-c-language
-	// https://stackoverflow.com/questions/3784518/conversion-from-ascii-values-to-char
-	
 	// encrypt plaintext
 	// converts chars in plaintext to ints 0-26, all uppercase letters and space char
 	  	for (i=0; i<strlen(plaintext); i++){
