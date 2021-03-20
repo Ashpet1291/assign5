@@ -25,12 +25,6 @@
 * 3. Print the message received from the server and exit the program.
 */
 
-
-static const char array[] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', ' '};
-FILE* plaintextFile;
-FILE* keyFile;
-char key[MAXSIZE]; 
-char textFile[MAXSIZE];
 char msg[MAXSIZE];
 long int keySize = 0; 
 long int plainSize = 0;
@@ -180,7 +174,6 @@ int main(int argc, char *argv[]) {
         exit(2);
     }
     
-//    memset(buffer, '\0', MAXSIZE);
   
   	// get file size of msg file from client
  	plainSize = getFileSize(argv[1]);
@@ -217,6 +210,8 @@ int main(int argc, char *argv[]) {
     	printf("CLIENT: WARNING: Not all data written to socket!\n");
   	}
   
+  
+    FILE* plaintextFile;
     // recieve success msg 1
     memset(buffer, '\0', sizeof(buffer));
     charsRead = recv(socketFD, buffer, MAXSIZE, 0);
@@ -270,6 +265,7 @@ int main(int argc, char *argv[]) {
   		error("CLIENT: ERROR reading from socket 2");
     }
     
+    FILE* keyFile;
 	// open key file
     keyFile = fopen(argv[2], "r");
     
@@ -314,21 +310,7 @@ int main(int argc, char *argv[]) {
     	printf("CLIENT: WARNING: Not all data written to socket!\n");
     }
 
- 
-//    // receives encrypted text from server
-//    // Clear out the buffer again for reuse
-//    memset(buffer, '\0', sizeof(buffer));
-//    // Read data from the socket, leaving \0 at end
-//    charsRead = recv(socketFD, buffer, MAXSIZE, 0); 
-//    
-//    ////////////////////////////////////////////////////////////////////////////////////
-//   // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
-//    
-//    if (charsRead < 0){
-//    	error("CLIENT: ERROR reading from socket 4");
-//    }
-
-
+	// read in ciphertext
 	char tempString[MAXSIZE];
   
     memset(buffer, '\0', MAXSIZE);
@@ -342,11 +324,10 @@ int main(int argc, char *argv[]) {
     	} 
 		strcat(tempString, buffer);	
 	}
-	//	int size = strlen(plaintext)-1;
-	tempString[strlen(tempString)-1] = '\0';	
-//	tempString[strlen(tempString)-2] = '\0';	
 
-    // print encoded text
+	tempString[strlen(tempString)-1] = '\0';		
+
+    // print ciphertext
     printf("%s\n", tempString);
     fflush(stdout);
 	
