@@ -151,8 +151,7 @@ int main(int argc, char *argv[]){
               char response[]  = "error, this is dec_server cant connect to that client";
               send(connectionSocket, response, sizeof(response), 0);
                memset(response, '\0',  sizeof(response));
-//		      fprintf(stderr,"This is enc_server, error connecting on this port\n");
-//            exit(2);
+
           } 
           else {
               //write confirmation back to client
@@ -167,8 +166,7 @@ int main(int argc, char *argv[]){
     if (charsRead < 0){
       error("ERROR reading from socket");
     }
-    // prints first message from client
-    //printf("SERVER: I received this from the client: \"%s\"\n", buffer);
+
 	
 	msgSize = atoi(buffer);
 
@@ -199,37 +197,13 @@ int main(int argc, char *argv[]){
 	
     
     
-    
-//    // Read the client's message from the socket
-//    charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-//    if (charsRead < 0){
-//      error("ERROR reading from socket");
-//    }
-//    // prints first message from client
-//    //printf("SERVER: I received this from the client: \"%s\"\n", buffer);
-//	
-//	strcat(plaintext, tempBuffer);
-	 
-	 
-//	printf("SERVER: I received this from the client: \"%s\"\n", plaintext);
-	
 	//sends success msg 2
 	 charsRead = send(connectionSocket, 
                     "I am the server, and I got your message", 39, 0); 
      if (charsRead < 0){
       	error("ERROR writing to socket");
     }
-
-	
-	// print number of elements
-//	printf("%d", NumberOfElements);
-    // Send a Success message back to the client
-//    charsRead = send(connectionSocket, 
-//                    "I am the server, and I got your message", 39, 0); 
-//    if (charsRead < 0){
-//      error("ERROR writing to socket");
-//    }
-//    
+  
     
      // Get the key size from the client
     memset(buffer, '\0', MAXSIZE);
@@ -238,10 +212,7 @@ int main(int argc, char *argv[]){
     if (charsRead < 0){
       error("ERROR reading from socket");
     }
-    // prints first message from client
-    //printf("SERVER: I received this from the client: \"%s\"\n", buffer);
-	
-//	strcat(key, buffer);
+   
 	keySize = atoi(buffer);
 //	printf("SERVER: I received this from the client: \"%d\"\n", keySize);
     // Send a Success message 3 back to the client
@@ -264,14 +235,7 @@ int main(int argc, char *argv[]){
 //    printf("SERVER: I received this from the client: \"%s\"\n", buffer);
 	
 	strcat(key, buffer);
-//	printf("SERVER: I received this from the client: \"%s\"\n", key);
-    // Send a Success message back to the client
-//     charsRead = send(connectionSocket, 
-//                    "I am the server, and I got your message", 39, 0); 
-//    if (charsRead < 0){
-//      error("ERROR writing to socket");
-//    }
-//    
+ 
     
 //    	// check for bad chars or unequal sizes
 	if(keySize < msgSize) {
@@ -323,8 +287,6 @@ int main(int argc, char *argv[]){
     len1 = strlen(decText);
 	if (sendall(connectionSocket, decText, &len1) == -1) {
 		
-	////////////////////////////////////////////////////////////////////////////////////
-   // printf("Client: This is size of msg being sent in sendall %d\n", len);
 		
     perror("sendall error writing to socket");
     printf("We only sent %d bytes because of the error!\n", len1);
@@ -332,16 +294,6 @@ int main(int argc, char *argv[]){
   	memset(decText, '\0', sizeof(decText));
   
 	
-//    // send decryption    
-//    charsRead = send(connectionSocket, decText, strlen(decText), 0);
-//    
-//    
-//    memset(decText, '\0', MAXSIZE);
-//  
-////                    "I am the server, and I got your message", 39, 0); 
-//    if (charsRead < 0){
-//      error("ERROR writing to socket");
-//    }
   	}
   	
   	default:
@@ -352,7 +304,6 @@ int main(int argc, char *argv[]){
 		}
   	close(connectionSocket);
 	}
-   //close(connectionSocket); 
   // Close the listening socket
   close(listenSocket); 
   return 0;

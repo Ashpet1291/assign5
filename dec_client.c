@@ -171,9 +171,7 @@ int main(int argc, char *argv[]) {
     error("CLIENT: ERROR connecting");
     exit(2);
   }
-  
-  
-  
+
   	// send message to test if enc client is connected to enc server
     memset(buffer, '\0', MAXSIZE);
     char testString[]="dec_client";
@@ -192,9 +190,7 @@ int main(int argc, char *argv[]) {
         fprintf(stderr,"This is decoding client, error connecting on this port\n");
         exit(2);
     }
-    
-  
-  
+
   
   	// get file size of msg file
  	plainSize = getFileSize(argv[1]);
@@ -214,17 +210,9 @@ int main(int argc, char *argv[]) {
 		exit(1);
 	}
     
-   
-    // check plaintextFile file for bad characters
-//    checkChars(argv[1]);
-//	// check key file for bad characters
-//    checkChars(argv[2]);
 	
 	// Send message size to server
-    charsWritten = send(socketFD, textFileSize, strlen(textFileSize), 0); 
-    ////////////////////////////////////////////////////////////////////////////////////
-   // printf("client: This is size of sending char txtfilesize %d\n", strlen(textFileSize));
-    	
+    charsWritten = send(socketFD, textFileSize, strlen(textFileSize), 0);    	
     	
     	
   	if (charsWritten < 0){
@@ -255,8 +243,6 @@ int main(int argc, char *argv[]) {
     fgets(msg, sizeof(msg) - 1, plaintextFile);
     // Remove the trailing \n that fgets adds
      
-    ////////////////////////////////////////////////////////////////////////////////////
-   // printf("Client: This is size of msg being sent after fgets %d\n", strlen(msg));
     
     msg[strcspn(msg, "\n")] = '\0'; 
 
@@ -264,8 +250,6 @@ int main(int argc, char *argv[]) {
     
 
     int len;
-//	// Send message to server
-//    len = strlen(msg);
 
     char variable[] = "$";
 	strcat(msg, variable);   
@@ -274,8 +258,6 @@ int main(int argc, char *argv[]) {
     len = strlen(msg);
 	if (sendall(socketFD, msg, &len) == -1) {
 		
-	////////////////////////////////////////////////////////////////////////////////////
-   // printf("Client: This is size of msg being sent in sendall %d\n", len);
 		
     perror("sendall");
     printf("We only sent %d bytes because of the error!\n", len);
@@ -327,8 +309,6 @@ int main(int argc, char *argv[]) {
     // send key string to server
     charsWritten = send(socketFD, buffer, strlen(buffer), 0); 
     
-    ////////////////////////////////////////////////////////////////////////////////////
-   // printf("CLIENT: This is size of sending key %d\n", strlen(buffer));
     	
     if (charsWritten < 0){
     	error("CLIENT: ERROR writing to socket");
@@ -337,21 +317,6 @@ int main(int argc, char *argv[]) {
     	printf("CLIENT: WARNING: Not all data written to socket!\n");
     }
 
- 
-//    // receives encrypted text from server
-//    // Clear out the buffer again for reuse
-//    memset(buffer, '\0', sizeof(buffer));
-//    // Read data from the socket, leaving \0 at end
-//    charsRead = recv(socketFD, buffer, MAXSIZE, 0);
-//	    
-//    ////////////////////////////////////////////////////////////////////////////////////
-//   // printf("CLIENT: This is size of recieving encrypt %d\n", strlen(buffer));
-//    
-//    if (charsRead < 0){
-//    	error("CLIENT: ERROR reading from socket e");
-//    }
-
- // Get the message from the client and display it
  
 	char tempString[MAXSIZE];
   
