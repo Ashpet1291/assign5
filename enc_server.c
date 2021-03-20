@@ -23,15 +23,14 @@
 #define CHUNK 1024
 
 
-char plaintext[MAXSIZE];
+
 char tempBuffer[MAXSIZE];
 
 	
-
 // Error function used for reporting issues
-void error(const char *msg) {
-  perror(msg);
-  exit(1);
+void error(const char *message) {
+	perror(message);
+    exit(1);
 } 
 
 
@@ -60,33 +59,17 @@ int main(int argc, char *argv[]){
 	char buffer[MAXSIZE];
 	struct sockaddr_in serverAddress, clientAddress;
   
-  
-	//  size_t NumberOfElements = sizeof(buffer)/sizeof(buffer[0]);
   	socklen_t sizeOfClientInfo = sizeof(clientAddress);
-  
-// 	char plaintext[MAXSIZE]; 
-  	char key[MAXSIZE];  
-  	char ciphertext[MAXSIZE]; 
-  	  	
-	int keySize;
-	int msgSize;
-	int encryption;
 	
 	int status;
 	pid_t pid;
 	
 	
-	int p = 0;
-	int plaintextInt =0;
-	int keyInt = 0;
-	int ciphertextInt = 0;
-	int i;
+//	int p = 0;
+
+
+
 	
-	
-//	printf("this is arg enc server port 0 %s\n", argv[0]);
-//    printf("this is arg 1 enc server port %s\n", argv[1]);
-//    printf("this is arg 2 enc server %s\n", argv[2]);
-//    printf("this is enc server port arg 3 %s\n", argv[3]);
 	
   	// Check usage & args
  	if (argc < 2) { 
@@ -128,7 +111,6 @@ int main(int argc, char *argv[]){
       error("ERROR on accept");
     }
 
-
 	pid = fork();
 
     switch (pid){
@@ -165,7 +147,7 @@ int main(int argc, char *argv[]){
               memset(response, '\0',  sizeof(response));
           }
 		
-		  
+		int msgSize;  
 		// get message size from the client
     	memset(buffer, '\0', MAXSIZE);
     	// Read the client's message from the socket, this should be the msg size
@@ -182,6 +164,8 @@ int main(int argc, char *argv[]){
       		error("ERROR writing to socket");
 		}
 	
+	
+		char plaintext[MAXSIZE];
 //		printf("%d", msgSize);
  		// Get the message from the client
    		memset(tempBuffer, '\0', MAXSIZE);
@@ -199,22 +183,7 @@ int main(int argc, char *argv[]){
 
 	//	int size = strlen(plaintext)-1;
 		plaintext[msgSize-1] = '\0';
-		
-//		printf("%s\n", plaintext);	
-	
-//    	charsRead = recv(connectionSocket, tempBuffer, MAXSIZE, 0); 
-//    	//////////////////////////////////////////////////////////////////////////////////
-////    	printf("SERVER: This is size of recieving char msg %d\n", strlen(tempBuffer));   
-//    	if (charsRead < 0){
-//      		error("ERROR reading from socket");
-//    	}  
-//		// put buffer into plaintext to use later
-//		strcat(plaintext, tempBuffer);
-//		
-//		plaintext[msgSize-1] = '\0';
-		
-		
-		
+				
 
 		// sends success message 2 to client- msg received
 	 	charsRead = send(connectionSocket, 
@@ -225,6 +194,7 @@ int main(int argc, char *argv[]){
    		}
 
 
+		int keySize;
     	// Get the key size from the client
     	memset(buffer, '\0', MAXSIZE);
     	// Read the client's message from the socket-key size
@@ -242,6 +212,8 @@ int main(int argc, char *argv[]){
       		error("ERROR writing to socket");
     	}
     
+    	
+		char key[MAXSIZE];
     	// Get the key from the client
     	memset(buffer, '\0', MAXSIZE);
     	memset(key, '\0', MAXSIZE);
@@ -254,6 +226,11 @@ int main(int argc, char *argv[]){
 		// add the message from client in key	
 		strcat(key, buffer);
     
+        char ciphertext[MAXSIZE];
+        int i;
+        int plaintextInt =0;
+        int keyInt = 0;
+	    int ciphertextInt = 0;
 	// encrypt plaintext
 	// converts chars in plaintext to ints 0-26, all uppercase letters and space char
 	  	for (i=0; i<strlen(plaintext); i++){
@@ -285,7 +262,6 @@ int main(int argc, char *argv[]){
 				ciphertext[i] = 'A' + (char)ciphertextInt;
 			}
 		}
-
 	
 	
 		int cipherLen;
@@ -305,20 +281,6 @@ int main(int argc, char *argv[]){
 		} 
   		memset(ciphertext, '\0', sizeof(ciphertext));
   		
-  				
-//    	// send encrypted text to client
-//    	charsRead = send(connectionSocket, ciphertext, strlen(ciphertext), 0);
-//    	
-//    	////////////////////////////////////////////////////////////////////////////////////
-//    //	printf("SERVER: This is size of sending cipher %d\n", strlen(ciphertext));
-//    	memset(ciphertext, '\0', MAXSIZE);
-//
-//   		// error sending to socket
-//		if (charsRead < 0){
-//      		error("ERROR writing to socket");
-//   		}
-
-
 
  		// close connection in child process
    		close(connectionSocket);
