@@ -188,7 +188,7 @@ int main(int argc, char *argv[]){
     	memset(plaintext, '\0', MAXSIZE);
 
 
-		while (strstr(plaintext, "$") == NULL) {
+		while (strstr(plaintext, "@") == NULL) {
 			memset(tempBuffer, '\0', sizeof(tempBuffer));
 			charsRead = recv(connectionSocket, tempBuffer, CHUNK, 0); 
 			if (charsRead < 0){
@@ -290,7 +290,7 @@ int main(int argc, char *argv[]){
 	
 		int cipherLen;
 
-    	char variable[] = "$";
+    	char variable[] = "@";
 		strcat(ciphertext, variable);   
     
 		// Send message to server

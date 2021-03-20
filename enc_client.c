@@ -25,19 +25,11 @@
 * 3. Print the message received from the server and exit the program.
 */
 
-char msg[MAXSIZE];
-long int keySize = 0; 
-long int plainSize = 0;
-char keySizeString[MAXSIZE]; 
-char textFileSize[MAXSIZE];
-
-char tempBuff[MAXSIZE];
-
 
 // Error function used for reporting issues
 void error(const char *message) { 
-  perror(message); 
-  exit(0); 
+	perror(message); 
+    exit(0); 
 } 
 
 // makes sure all information is sent
@@ -94,10 +86,10 @@ void checkChars(char tempList[]) {
 			
 		if(charac != 32) {
 			if (charac < 65) {
-					fprintf(stderr,"error: input contains bad characters\n");
-					memset(tempList, '\0', sizeof(tempList));
-					exit(1); 
-				}
+				fprintf(stderr,"error: input contains bad characters\n");
+				memset(tempList, '\0', sizeof(tempList));
+				exit(1); 
+			}
 			if (charac > 90) {
 				fprintf(stderr,"error: input contains bad characters\n");
 				memset(tempList, '\0', sizeof(tempList));
@@ -174,17 +166,21 @@ int main(int argc, char *argv[]) {
         exit(2);
     }
     
-  
+    long int plainSize = 0;
+    
   	// get file size of msg file from client
  	plainSize = getFileSize(argv[1]);
 	 	
+	char textFileSize[MAXSIZE]; 	
  	//put int in char
  	sprintf(textFileSize, "%d", plainSize); 
  	
-
+    long int keySize = 0; 
 	// get file size of key	file
 	keySize = getFileSize(argv[2]);	
 	
+	
+	char keySizeString[MAXSIZE]; 
 	//put int in char to send	
 	sprintf(keySizeString, "%d", keySize);
 	
@@ -228,6 +224,7 @@ int main(int argc, char *argv[]) {
         exit(1); 
     } 
    
+    char msg[MAXSIZE];
     memset(msg, '\0', sizeof(msg));
     
     // Get input from the user, trunc to buffer - 1 chars, leaving \0
@@ -238,13 +235,12 @@ int main(int argc, char *argv[]) {
 	// close the file
     fclose(plaintextFile); 
 
-
 	// check plaintextFile file for bad characters
     checkChars(msg);    
 
 
     int len;
-    char variable[] = "$";
+    char variable[] = "@";
 	strcat(msg, variable);   
     
 	// Send message to server
@@ -282,8 +278,7 @@ int main(int argc, char *argv[]) {
     fclose(keyFile);   
 
     
-	// Send keysize to server
- 	// Write to the server
+	// Write keysize to server
     charsWritten = send(socketFD, keySizeString, strlen(keySizeString), 0); 
   	if (charsWritten < 0){
     	error("CLIENT: ERROR writing to socket");
@@ -292,6 +287,7 @@ int main(int argc, char *argv[]) {
     	printf("CLIENT: WARNING: Not all data written to socket!\n");
   	}
 
+	char tempBuff[MAXSIZE];
 	// recieve succes 3  
     memset(tempBuff, '\0', sizeof(tempBuff));
     charsRead = recv(socketFD, tempBuff, MAXSIZE, 0);
@@ -316,7 +312,7 @@ int main(int argc, char *argv[]) {
     memset(buffer, '\0', MAXSIZE);
     memset(tempString, '\0', MAXSIZE);
      
-    while (strstr(tempString, "$") == NULL) {
+    while (strstr(tempString, "@") == NULL) {
 		memset(buffer, '\0', sizeof(buffer));
 		charsRead = recv(socketFD, buffer, CHUNK, 0); 
 		if (charsRead < 0){
