@@ -60,18 +60,6 @@ int main(int argc, char *argv[]){
   
 //  size_t NumberOfElements = sizeof(buffer)/sizeof(buffer[0]);
   socklen_t sizeOfClientInfo = sizeof(clientAddress);
-  
-  char plaintext[MAXSIZE];
-  
-  char key[MAXSIZE];
-  
-  char decText[MAXSIZE]; 
-  char tempDecr[MAXSIZE];
-	char tempBuffer[1000];
-
-	int keySize;
-	int msgSize;
-	int decryption;
 	
 	int status;
 	pid_t pid;
@@ -79,7 +67,6 @@ int main(int argc, char *argv[]){
 	
 			
 	int i;
-	char n;
 	int plaintextInt;
     int keyInt;
 	int result;
@@ -160,6 +147,7 @@ int main(int argc, char *argv[]){
               memset(response, '\0',  sizeof(response));
           }   
 
+	int msgSize;
     memset(buffer, '\0', MAXSIZE);
     // Read the client's message from the socket, this should be the msg size
     charsRead = recv(connectionSocket, buffer, MAXSIZE, 0); 
@@ -177,6 +165,8 @@ int main(int argc, char *argv[]){
       	error("ERROR writing to socket");
 	}
 
+	char plaintext[MAXSIZE];
+	char tempBuffer[MAXSIZE];
     // Get the message from the client and display it
     memset(tempBuffer, '\0', MAXSIZE);
     memset(plaintext, '\0', MAXSIZE);
@@ -204,7 +194,7 @@ int main(int argc, char *argv[]){
       	error("ERROR writing to socket");
     }
   
-    
+    int keySize;
      // Get the key size from the client
     memset(buffer, '\0', MAXSIZE);
     // Read the client's message from the socket
@@ -223,6 +213,7 @@ int main(int argc, char *argv[]){
     }
 
     
+    char key[MAXSIZE];
     
      // Get the key from the client and display it
     memset(buffer, '\0', MAXSIZE);
@@ -243,7 +234,7 @@ int main(int argc, char *argv[]){
 		exit(1);
 	}
     
-
+     char decText[MAXSIZE];
 	 // decrypt plaintext
 	 //  converts chars in plaintext to ints 0-26, all uppercase letters and space char
 	  for (i=0; i < msgSize-1; i++){
