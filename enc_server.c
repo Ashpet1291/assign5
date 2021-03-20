@@ -22,10 +22,6 @@
 #define MAXSIZE 80000
 #define CHUNK 1024
 
-
-
-char tempBuffer[MAXSIZE];
-
 	
 // Error function used for reporting issues
 void error(const char *message) {
@@ -63,13 +59,7 @@ int main(int argc, char *argv[]){
 	
 	int status;
 	pid_t pid;
-	
-	
-//	int p = 0;
 
-
-
-	
 	
   	// Check usage & args
  	if (argc < 2) { 
@@ -122,9 +112,7 @@ int main(int argc, char *argv[]){
 		// child process
 		case 0:
 		{   
-		
-		//send(connectionSocket, ciphertext, strlen(ciphertext), 0);
-	
+			
     	  memset(buffer, '\0', MAXSIZE);
 		  //receive test message and send response back
           charsRead = recv(connectionSocket, buffer, sizeof(buffer)-1, 0);
@@ -166,7 +154,8 @@ int main(int argc, char *argv[]){
 	
 	
 		char plaintext[MAXSIZE];
-//		printf("%d", msgSize);
+		char tempBuffer[MAXSIZE];
+
  		// Get the message from the client
    		memset(tempBuffer, '\0', MAXSIZE);
     	memset(plaintext, '\0', MAXSIZE);
@@ -181,7 +170,6 @@ int main(int argc, char *argv[]){
 			strcat(plaintext, tempBuffer);	
 		}
 
-	//	int size = strlen(plaintext)-1;
 		plaintext[msgSize-1] = '\0';
 				
 
@@ -272,9 +260,6 @@ int main(int argc, char *argv[]){
 		// Send message to server
     	cipherLen = strlen(ciphertext);
 		if (sendall(connectionSocket, ciphertext, &cipherLen) == -1) {
-		
-		////////////////////////////////////////////////////////////////////////////////////
-   		// printf("Client: This is size of msg being sent in sendall %d\n", len);
 		
    		perror("sendall cipher");
     	printf("We only sent %d bytes because of the error!\n", cipherLen);
