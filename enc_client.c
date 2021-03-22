@@ -2,7 +2,7 @@
 // By Ashley Pettibone
 
 // sources and inspirations
-// most of the send and recv code along with connecting to sockets is frmo the examples in class
+// most of the send and recv code along with connecting to sockets is from the examples in class
 
 
 #include <stdio.h>
@@ -19,7 +19,7 @@
 
 
 /**
-* Client code
+* enc client code
 * 1. Create a socket and connect to the server specified in the command arugments.
 * 2. Prompt the user for input and send that input as a message to the server.
 * 3. Print the message received from the server and exit the program.

@@ -19,15 +19,12 @@
 
 
 /**
-* Client code
+* Dec client code
 * 1. Create a socket and connect to the server specified in the command arugments.
 * 2. Prompt the user for input and send that input as a message to the server.
 * 3. Print the message received from the server and exit the program.
 */
 
-
-// if enc_client cannot connect to the enc_server server, for any reason (including that it has accidentally tried to connect to the dec_server server), 
-// it should report this error to stderr with the attempted port, and set the exit value to 2.
 
 
 // Error function used for reporting issues
@@ -158,7 +155,7 @@ int main(int argc, char *argv[]) {
 
   	// send message to test if enc client is connected to enc server
     memset(buffer, '\0', MAXSIZE);
-    char testString[]="dec_client";
+    char testString[]="this is dec_client";
     
     charsWritten = send(socketFD, testString, sizeof(testString), 0);
     if (charsWritten < 0){
@@ -170,7 +167,7 @@ int main(int argc, char *argv[]) {
      if(charsRead < 0) {
   		error("CLIENT: ERROR reading from socket a");
     }
-    if (strcmp(buffer, "dec_client") != 0) {
+    if (strcmp(buffer, "this is dec_client") != 0) {
         fprintf(stderr,"This is decoding client, error connecting on this port\n");
         exit(2);
     }
