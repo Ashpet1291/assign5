@@ -128,14 +128,14 @@ int main(int argc, char *argv[]){
     	  }  
           if (strcmp(buffer, "this is dec_client") != 0) {
           	        	
-              //write error back to client
+              // write error back to client
               char response[]  = "error, this is dec_server cant connect to that client";
               send(connectionSocket, response, sizeof(response), 0);
                memset(response, '\0',  sizeof(response));
 
           } 
           else {
-              //write confirmation back to client
+              // write confirmation back to client
               char response[] = "this is dec_client";
               send(connectionSocket, response, sizeof(response), 0);
               memset(response, '\0',  sizeof(response));
@@ -216,13 +216,11 @@ int main(int argc, char *argv[]){
     if (charsRead < 0){
       error("ERROR reading from socket");
     }
-    // prints first message from client
-//    printf("SERVER: I received this from the client: \"%s\"\n", buffer);
-	
+   
 	strcat(key, buffer);
  
     
-//    	// check for bad chars or unequal sizes
+    // check for bad chars or unequal sizes
 	if(keySize < msgSize) {
 		fprintf(stderr, "ERROR: key size small, can't encrypt"); 
 		exit(1);

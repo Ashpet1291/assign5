@@ -191,11 +191,6 @@ int main(int argc, char *argv[]) {
 	}
     
    
-//    // check plaintextFile file for bad characters
-//    checkChars();
-	// check key file for bad characters
-   // checkChars(argv[2]);
-	
 	// Write message size to server
     charsWritten = send(socketFD, textFileSize, strlen(textFileSize), 0); 
        	

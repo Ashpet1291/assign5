@@ -121,7 +121,7 @@ int main(int argc, char *argv[]){
     	  }  
           if (strstr(buffer, "this is enc_client") != 0) {
           	        	
-              //write error back to client
+              // if not equal to test string, write error back to client
               char response[]  = "error, this is enc_server cant connect";
               send(connectionSocket, response, sizeof(response), 0);
                memset(response, '\0',  sizeof(response));
@@ -129,7 +129,7 @@ int main(int argc, char *argv[]){
 //            exit(2);
           } 
           else {
-              //write confirmation back to client
+              // write confirmation back to client
               char response[] = "enc_client";
               send(connectionSocket, response, sizeof(response), 0);
               memset(response, '\0',  sizeof(response));
@@ -219,8 +219,8 @@ int main(int argc, char *argv[]){
         int plaintextInt =0;
         int keyInt = 0;
 	    int ciphertextInt = 0;
-	// encrypt plaintext
-	// converts chars in plaintext to ints 0-26, all uppercase letters and space char
+	    // encrypt plaintext
+	    // converts chars in plaintext to ints 0-26, all uppercase letters and space char
 	  	for (i=0; i<strlen(plaintext); i++){
 	  		// if the char in plaintext is a space put 26 in int plainttext-start at 0
 	  		if(plaintext[i] == ' '){

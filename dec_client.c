@@ -141,11 +141,6 @@ int main(int argc, char *argv[]) {
         hostInfo->h_length);
 	
 	
-	 //if enc_client cannot connect to the enc_server server, 
-	 //for any reason (including that it has accidentally tried to connect to the dec_server server)
-	// it should report this error to stderr with the attempted port, 
-	 //and set the exit value to 2. Otherwise, upon successfully running and terminating, enc_client should set the exit value to 0.
-	
 	
   // Connect to server
   if (connect(socketFD, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) < 0){
@@ -161,8 +156,7 @@ int main(int argc, char *argv[]) {
     if (charsWritten < 0){
     	error("CLIENT: ERROR writing to socket");
   	}
-    
-    
+     
     charsRead = recv(socketFD, buffer, sizeof(buffer), 0);
      if(charsRead < 0) {
   		error("CLIENT: ERROR reading from socket a");
@@ -215,7 +209,7 @@ int main(int argc, char *argv[]) {
   		error("CLIENT: ERROR reading from socket b");
     }
     
-    //send plain text to server
+    // send plain text to server
     plaintextFile = fopen(argv[1], "r");  
 
     // Check if file exists   
@@ -270,8 +264,6 @@ int main(int argc, char *argv[]) {
     memset(buffer, '\0', sizeof(buffer));
     // Get input from the user, trunc to buffer - 1 chars, leaving \0
     fgets(buffer, sizeof(buffer) - 1, keyFile);
-    // Remove the trailing \n that fgets adds
- 
     fclose(keyFile);   
 
     
@@ -319,7 +311,7 @@ int main(int argc, char *argv[]) {
     	} 
 		strcat(tempString, buffer);	
 	}
-	//	int size = strlen(plaintext)-1;
+
 		tempString[plainSize-1] = '\0';	
     
 
